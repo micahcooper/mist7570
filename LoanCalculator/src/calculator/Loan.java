@@ -27,8 +27,12 @@ public class Loan {
 		this.loanTerm = loanTerm;
 	}
 	
-	public double getMonthlyPayment(){
+	protected double getMonthlyPayment(){
 		return (loanAmount * loanRate / (1 - (Math.pow( (1 + loanRate), (-1*getLoanTermInMonths())) )));
+	}
+	
+	protected double getMonthlyLoanRate(){
+		return (this.loanRate/100)/12;
 	}
 
 	public int getLoanTermInMonths(){

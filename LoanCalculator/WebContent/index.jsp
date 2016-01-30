@@ -15,13 +15,13 @@
 	
 	<form name="loanTable" action="doAmortization.jsp" method="post">
 		<label>Loan Amount:</label>
-		<input type="text" name="loanAmount" value="0" />
+		<input type="text" name="loanAmount" value="20000" />
 		<br />
 		<label>Loan Term (in years):</label>
-		<input type="text" name="loanTerm" value="0" />
+		<input type="text" name="loanTerm" value="30" />
 		<br />
 		<label>Loan Rate:</label>
-		<input type="text" name="loanRate" value="0" />
+		<input type="text" name="loanRate" value="6" />
 		
 		<input type="submit" />
 	</form>
