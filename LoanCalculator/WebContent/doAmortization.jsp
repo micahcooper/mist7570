@@ -1,5 +1,5 @@
 <% 
-/**TODO 
+/**TODO
 1 - collect parameters form request
 2 - create loan object
 3 - create amortization object and pass it the loan object

@@ -1,5 +1,9 @@
 /**
- * 
+ * TODO
+ * 1- create instance variables
+ * 2- getters/setters
+ * 3- calculate instance variables
+ * 4- create amort table spit out
  */
 package calculator;
 
