@@ -17,7 +17,7 @@
 		<label>Loan Amount:</label>
 		<input type="text" name="loanAmount" value="0" />
 		<br />
-		<label>Loan Term:</label>
+		<label>Loan Term (in years):</label>
 		<input type="text" name="loanTerm" value="0" />
 		<br />
 		<label>Loan Rate:</label>

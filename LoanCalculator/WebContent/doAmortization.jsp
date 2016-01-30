@@ -19,6 +19,7 @@
 <body>
 <h1>Loan Amortization Results</h1>
 
-<%= request.getParameter("loanAmount") %>
+<%= (new Amortization().doAmortization()) %>
+
 </body>
 </html>

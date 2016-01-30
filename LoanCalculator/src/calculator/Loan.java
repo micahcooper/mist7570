@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package calculator;
@@ -26,10 +26,13 @@ public class Loan {
 		this.loanTerm = loanTerm;
 	}
 	
-	public void getMontlyPayment(){
-		
+	public double getMonthlyPayment(){
+		return (loanAmount * loanRate / (1 - (Math.pow( (1 + loanRate), (-1*getLoanTermInMonths())) )));
 	}
 
+	public int getLoanTermInMonths(){
+		return this.loanTerm*12;
+	}
 	public int getLoanAmount() {
 		return loanAmount;
 	}

@@ -35,8 +35,9 @@ public class Amortization {
 	public String doAmortization(){
 		String buildTable;
 		
-		buildTable = "<table><tr><th>Month</th></tr></table>";
-		
+		buildTable = "<table><tr><th>Month</th></tr>";
+		/*logic*/
+		buildTable += "</table>";
 		return buildTable;
 	}
 
