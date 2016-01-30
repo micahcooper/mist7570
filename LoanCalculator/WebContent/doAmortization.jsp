@@ -1,3 +1,10 @@
+<% 
+/**TODO 
+1 - collect parameters form request
+2 - create loan object
+3 - create amortization object and pass it the loan object
+4 - call the doAmortization method from amortization ojbect
+**/ %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
