@@ -7,6 +7,8 @@
  */
 package calculator;
 
+import java.text.NumberFormat;
+
 /**
  * @author micah cooper
  *
@@ -16,7 +18,7 @@ public class Amortization {
 	private Loan loan;
 	private double monthlyPaymentToInterest;
 	private double monthlyPaymentToBalance;
-	private double currentBalanceAfterPayment;
+	private double currentBalance;
 
 	/**
 	 * Constructor with no arguments
@@ -34,7 +36,7 @@ public class Amortization {
 		// TODO Auto-generated constructor stub
 		super();
 		this.loan = loan;
-		this.currentBalanceAfterPayment=loan.getLoanAmount();
+		this.setCurrentBalance(loan.getLoanAmount());
 	}
 	
 	/**
@@ -43,20 +45,37 @@ public class Amortization {
 	public String doAmortization(){
 		String buildTable;
 		int counter=0;
+		NumberFormat nf = NumberFormat.getInstance();
+		nf.setMaximumFractionDigits(2);
+		nf.setMinimumFractionDigits(2);
 		
-		buildTable = "<table><tr><th>Month</th><th>Payment</th><th>Interest Paid</th></tr>";
+		buildTable = "<table><tr><th>Month</th><th>Payment</th><th>Interest Paid</th><th>Principal Paid</th><th>Ending Balance</th></tr>";
+		
 		while( counter++ < loan.getLoanTermInMonths() ){
+			
+			
 			buildTable += "<tr><td>"+counter+"</td>";
-			buildTable += "<td>"+this.loan.getMonthlyPayment()+"</td>";
-			buildTable += "<td>"+this.calculateMonthlyPaymentToInterest()+"</td>";
-			this.setCurrentBalanceAfterPayment(getCurrentBalanceAfterPayment()-this.loan.getMonthlyPayment());
+			buildTable += "<td>"+nf.format( this.loan.getMonthlyPayment() )+"</td>";
+			buildTable += "<td>"+nf.format( this.calculateMonthlyPaymentToInterest() )+"</td>";
+			buildTable += "<td>"+nf.format( this.calculateMonthlyPaymentToBalance() )+"</td>";
+			this.setCurrentBalance( this.getCurrentBalance()-this.calculateMonthlyPaymentToBalance() );
+			buildTable += "<td>"+nf.format( this.calculateCurrentBalanceAfterPayment() )+"</td>";
+			
 		}
 		buildTable += "</table>";
 		return buildTable;
 	}
 	
 	private double calculateMonthlyPaymentToInterest(){
-		return this.loan.getMonthlyLoanRate()*this.currentBalanceAfterPayment;
+		return this.loan.getMonthlyLoanRate()*(this.getCurrentBalance());
+	}
+	
+	private double calculateMonthlyPaymentToBalance(){
+		return this.loan.getMonthlyPayment() - this.calculateMonthlyPaymentToInterest();
+	}
+	
+	private double calculateCurrentBalanceAfterPayment(){
+		return this.getCurrentBalance() - this.getMonthlyPaymentToBalance();
 	}
 
 	public Loan getLoan() {
@@ -83,12 +102,12 @@ public class Amortization {
 		this.monthlyPaymentToBalance = monthlyPaymentToBalance;
 	}
 
-	public double getCurrentBalanceAfterPayment() {
-		return currentBalanceAfterPayment;
+	public double getCurrentBalance() {
+		return currentBalance;
 	}
 
-	public void setCurrentBalanceAfterPayment(double currentBalanceAfterPayment) {
-		this.currentBalanceAfterPayment = currentBalanceAfterPayment;
+	public void setCurrentBalance(double currentBalance) {
+		this.currentBalance = currentBalance;
 	}
 
 }
