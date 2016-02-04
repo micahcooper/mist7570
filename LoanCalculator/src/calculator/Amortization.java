@@ -74,23 +74,24 @@ public class Amortization {
 	 * @return the amount of the monthly payment that goes toward the interest on the Loan object
 	 */
 	private double calculateMonthlyPaymentToInterest(){
-		this.setMonthlyPaymentToInterest(this.loan.getMonthlyLoanRate()*(this.getCurrentBalance()));
-		return this.getMonthlyPaymentToInterest();
+		return this.loan.getMonthlyLoanRate()*(this.getCurrentBalance());
 	}
+	
+	
+	
 	
 	/**
 	 * @return the amount of the monthly payment that goes to the principal of the Loan object
 	 */
 	private double calculateMonthlyPaymentToBalance(){
-		this.setMonthlyPaymentToBalance(this.loan.getMonthlyPayment() - this.calculateMonthlyPaymentToInterest());
-		return this.getMonthlyPaymentToBalance();
-	}
+			return this.loan.getMonthlyPayment() - this.calculateMonthlyPaymentToInterest();
+		}
 	
 	/**
 	 * @return the current balance of the loan after applying the current monthly payment
 	 */
 	private double calculateCurrentBalanceAfterPayment(){
-		return this.getCurrentBalance() - this.getMonthlyPaymentToBalance();
+			return this.getCurrentBalance() - this.getMonthlyPaymentToBalance();
 	}
 
 	/**
@@ -100,51 +101,30 @@ public class Amortization {
 		return loan;
 	}
 
-	/**
-	 * @param loan the Loan object of the Amortization class
-	 */
 	public void setLoan(Loan loan) {
 		this.loan = loan;
 	}
 
-	/**
-	 * @return the instance variable of the monthly payment that goes towards interest
-	 */
 	public double getMonthlyPaymentToInterest() {
 		return monthlyPaymentToInterest;
 	}
 
-	/**
-	 * @param monthlyPaymentToInterest the amount of the monthly payment going to interest
-	 */
 	public void setMonthlyPaymentToInterest(double monthlyPaymentToInterest) {
 		this.monthlyPaymentToInterest = monthlyPaymentToInterest;
 	}
 
-	/**
-	 * @return the amount of the monthly payment that goes to the principal
-	 */
 	public double getMonthlyPaymentToBalance() {
 		return monthlyPaymentToBalance;
 	}
 
-	/**
-	 * @param monthlyPaymentToBalance the amount of the monthly payment that goes to the principal
-	 */
 	public void setMonthlyPaymentToBalance(double monthlyPaymentToBalance) {
 		this.monthlyPaymentToBalance = monthlyPaymentToBalance;
 	}
 
-	/**
-	 * @return the running total of the current balance of the original loan amount
-	 */
 	public double getCurrentBalance() {
 		return currentBalance;
 	}
 
-	/**
-	 * @param currentBalance the current balance of the loan
-	 */
 	public void setCurrentBalance(double currentBalance) {
 		this.currentBalance = currentBalance;
 	}
