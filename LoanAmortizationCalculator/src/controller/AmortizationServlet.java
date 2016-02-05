@@ -18,9 +18,6 @@ import model.Loan;
 @WebServlet("/doAmortization")
 public class AmortizationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int loanAmount;
-	private double loanRate;
-	private int loanTerm;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -58,17 +55,19 @@ public class AmortizationServlet extends HttpServlet {
     	out.println("<title>Loan Amortization Results</title>");
     	out.println("</head>");
     	out.println("<body>");
+    	out.println("<div style='height:15px;background-color:#0086FF	;'>&nbsp;</div>");
     	out.println("<div id=container>");
     	out.println("<h1>Loan Amortization Results</h1>");
-    	out.println("<p><a href='index.jsp'>Try another</a></p>");
+    	out.println("<p><form action='index.jsp' method='post'><input type='submit' value='Try Another!'/></form></p>");
     	
     	Loan loan = new Loan(loanAmount, loanRate, loanTerm);
     	Amortization amort = new Amortization(loan);
     	
     	out.println(amort.doAmortization());
     	
-    	out.println("<p><a href='index.jsp'>Try another</a></p>");
+    	out.println("<p><form action='index.jsp' method='post'><input type='submit' value='Try Another!'/></form></p>");
     	out.println("</div>");
+    	out.println("<div style='height:15px;background-color:#0086FF;'>&nbsp;</div>");
     	out.println("</body>");
     	out.println("</html>");
 		doGet(request, response);

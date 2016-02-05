@@ -54,7 +54,7 @@ public class Amortization {
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(2);
 		
-		buildTable = "<table><tr><th width='80px'>Month</th><th width='125px'>Monthly Payment</th><th width='161px'>Monthly Interest Paid</th><th width='150px'>Total Interest Paid</th><th width='165px'>Monthly Principal Paid</th><th>Ending Balance</th></tr></table>";
+		buildTable = "<table><tr><th width='80px'>Month</th><th width='125px'>Monthly Payment</th><th width='161px'>Monthly Interest Paid</th><th width='150px'>Total Interest Paid</th><th width='165px'>Monthly Principal Paid</th><th>Unpaid Balance</th></tr></table>";
 		buildTable += "<div id=table-div><table><tbody>";
 		for( int i=0; i < loan.getLoanTermInMonths(); i++ ){
 			
@@ -62,6 +62,7 @@ public class Amortization {
 				buildTable += "<tr class='even'>";
 			else
 				buildTable += "<tr class='odd'>";
+			
 			buildTable += "<td width='80px'>"+i+"</td>";
 			buildTable += "<td width='125px'>"+nf.format( this.loan.getMonthlyPayment() )+"</td>";
 			buildTable += "<td width='161px'>"+nf.format( this.calculateMonthlyPaymentToInterest( this.getCurrentBalance()) )+"</td>";
@@ -77,6 +78,7 @@ public class Amortization {
 	}
 	
 	/**
+	 * @param currentBalance
 	 * @return the amount of the monthly payment that goes toward the interest on the Loan object
 	 */
 	private double calculateMonthlyPaymentToInterest(double currentBalance){
@@ -84,6 +86,7 @@ public class Amortization {
 	}
 	
 	/**
+	 * @param currentBalance
 	 * @return the amount of the monthly payment that goes to the principal of the Loan object
 	 */
 	private double calculateMonthlyPaymentToBalance( double currentBalance){
@@ -98,7 +101,11 @@ public class Amortization {
 		return this.currentBalance;
 	}
 
-	public double calculateTotalInterestPaid(double currentBalance){
+	/**
+	 * @param currentBalance
+	 * @return
+	 */
+	private double calculateTotalInterestPaid(double currentBalance){
 		this.totalInterest += this.calculateMonthlyPaymentToInterest(currentBalance);
 		return totalInterest;
 	}
@@ -157,6 +164,20 @@ public class Amortization {
 	 */
 	public void setCurrentBalance(double currentBalance) {
 		this.currentBalance = currentBalance;
+	}
+
+	/**
+	 * @return the total interest
+	 */
+	public double getTotalInterest() {
+		return totalInterest;
+	}
+
+	/**
+	 * @param totalInterest the amount of the total interest
+	 */
+	public void setTotalInterest(double totalInterest) {
+		this.totalInterest = totalInterest;
 	}
 
 }

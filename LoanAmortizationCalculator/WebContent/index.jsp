@@ -14,7 +14,7 @@
 	<div id=container class=frontpage>
 		<h1>Loan Amortization Calculator</h1>
 		<div class=fp-form>
-			<form name="loanTable" action="doAmortization" method="post">
+			<form id="fp-page" name="loanTable" action="doAmortization" method="post">
 				<p><label>Loan Amount:</label>
 				<input type="text" name="loanAmount" value="195000" /></p>
 				
