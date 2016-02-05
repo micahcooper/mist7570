@@ -5,12 +5,12 @@ label {width:150px;display:inline-block;}
 input[type=submit] {border-radius:3px;}
 table {border:0px black solid;width:810px;}
 td {border-bottom:1px black solid;padding:0px;}
-th {color:#0086FF; text-align:left; border-bottom:1px black solid; padding:0px;}
+th {color:#0086FF; text-align:left; border-bottom:1px black solid; padding:0px;text-shadow: 1px 1px #ddd;}
 .first_col {width:75px !important;	}
 th.last_th {width:150px;}
 tr.even {background-color:#ddd;}
 
 #container {margin:0 auto;width:830px;}
 #container.frontpage {}
-.fp-form {border:1px solid #0086FF;box-shadow: 10px 10px 5px #0086FF;}
+.fp-form {border:1px solid #0086FF;box-shadow: 5px 5px 5px #0086FF;}
 #table-div {max-height:500px;overflow:auto;}
