@@ -53,17 +53,20 @@ public class Amortization {
 		NumberFormat nf = NumberFormat.getCurrencyInstance();
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(2);
+		int counter = 0;
 		
+		//begin building the html syntax that will house our amortization table
 		buildTable = "<table><tr><th width='80px'>Month</th><th width='125px'>Monthly Payment</th><th width='161px'>Monthly Interest Paid</th><th width='150px'>Total Interest Paid</th><th width='165px'>Monthly Principal Paid</th><th>Unpaid Balance</th></tr></table>";
 		buildTable += "<div id=table-div><table><tbody>";
-		for( int i=0; i < loan.getLoanTermInMonths(); i++ ){
+		//add a row to the table until we have paid off the loan, counting this way helps with odd loan amounts, like zero
+		while( (int)currentBalance > 0 ){
 			
-			if(i % 2 == 0)
+			if(counter++ % 2 == 0)
 				buildTable += "<tr class='even'>";
 			else
 				buildTable += "<tr class='odd'>";
 			
-			buildTable += "<td width='80px'>"+i+"</td>";
+			buildTable += "<td width='80px'>"+counter+"</td>";
 			buildTable += "<td width='125px'>"+nf.format( this.loan.getMonthlyPayment() )+"</td>";
 			buildTable += "<td width='161px'>"+nf.format( this.calculateMonthlyPaymentToInterest( this.getCurrentBalance()) )+"</td>";
 			buildTable += "<td width='150px'>"+nf.format( this.calculateTotalInterestPaid( this.getCurrentBalance() ) )+"</td>";
@@ -81,7 +84,7 @@ public class Amortization {
 	 * @param currentBalance
 	 * @return the amount of the monthly payment that goes toward the interest on the Loan object
 	 */
-	private double calculateMonthlyPaymentToInterest(double currentBalance){
+	private double calculateMonthlyPaymentToInterest( double currentBalance ){
 		return this.loan.getMonthlyLoanRate()*(currentBalance);
 	}
 	
@@ -89,7 +92,10 @@ public class Amortization {
 	 * @param currentBalance
 	 * @return the amount of the monthly payment that goes to the principal of the Loan object
 	 */
-	private double calculateMonthlyPaymentToBalance( double currentBalance){
+	private double calculateMonthlyPaymentToBalance( double currentBalance ){
+		if( this.loan.getMonthlyPayment() > currentBalance)
+			return currentBalance;
+	
 		return this.loan.getMonthlyPayment() - this.calculateMonthlyPaymentToInterest( currentBalance );
 	}
 	
@@ -97,6 +103,7 @@ public class Amortization {
 	 * @return the current balance of the loan after applying the current monthly payment
 	 */
 	private double calculateCurrentBalanceAfterPayment(){
+		System.out.println("Balance: "+currentBalance+" - amount paid: "+this.calculateMonthlyPaymentToBalance(currentBalance));
 		this.currentBalance -= this.calculateMonthlyPaymentToBalance(currentBalance);
 		return this.currentBalance;
 	}
@@ -105,7 +112,7 @@ public class Amortization {
 	 * @param currentBalance
 	 * @return
 	 */
-	private double calculateTotalInterestPaid(double currentBalance){
+	private double calculateTotalInterestPaid( double currentBalance ){
 		this.totalInterest += this.calculateMonthlyPaymentToInterest(currentBalance);
 		return totalInterest;
 	}

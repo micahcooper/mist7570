@@ -16,13 +16,13 @@
 		<div class=fp-form>
 			<form id="fp-page" name="loanTable" action="doAmortization" method="post">
 				<p><label>Loan Amount:</label>
-				<input type="text" name="loanAmount" value="195000" /></p>
+				<input type="text" name="loanAmount" value="20000" /></p>
 				
 				<p><label>Loan Term (in years):</label>
 				<input type="text" name="loanTerm" value="30" /></p>
 				
 				<p><label>Loan Rate:</label>
-				<input type="text" name="loanRate" value="4" /></p>
+				<input type="text" name="loanRate" value="6" /></p>
 				
 				<input type="submit" />
 			</form>
