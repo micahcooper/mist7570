@@ -1,16 +1,17 @@
 body {margin:0px;}
-h1 {text-align:center;}
+h1 {text-align:center;color:#002F2F;}
 form#fp-page {width:350px;margin:0 auto;padding:15px;}
 label {width:150px;display:inline-block;}
 input[type=submit] {border-radius:3px;}
-table {border:0px black solid;width:810px;}
-td {border-bottom:1px black solid;padding:0px;}
-th {color:#0086FF; text-align:left; border-bottom:1px black solid; padding:0px;text-shadow: 1px 1px #ddd;}
+table {border:0px #046380 solid;width:810px;}
+td {border-bottom:1px #046380 solid;padding:0px;}
+th {color:#046380; text-align:left; border-bottom:1px #046380 solid; padding:0px;text-shadow: 1px 1px #A7A37E;}
 .first_col {width:75px !important;	}
 th.last_th {width:150px;}
 tr.even {background-color:#ddd;}
 
 #container {margin:0 auto;width:830px;}
 #container.frontpage {}
-.fp-form {border:1px solid #0086FF;box-shadow: 5px 5px 5px #0086FF;}
+.fp-form {border:1px solid #A7A37E;box-shadow: 5px 5px 5px #A7A37E;}
 #table-div {max-height:500px;overflow:auto;}
+.footer,.header {height:15px;background-color:#A7A37E;}

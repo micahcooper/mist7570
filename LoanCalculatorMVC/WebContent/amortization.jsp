@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<div style='height:15px;background-color:#0086FF	;'>&nbsp;</div>
+<div class=header style=''>&nbsp;</div>
 <div id=container>
 <h1>Loan Amortization Results</h1>
 <form action='index.jsp' method='post'><input type='submit' value='Try Another!'/></form>
@@ -19,6 +19,6 @@
     	
 <form action='index.jsp' method='post'><input type='submit' value='Try Another!'/></form>
 </div>
-<div style='height:15px;background-color:#0086FF;'>&nbsp;</div>
+<div class=footer style=''>&nbsp;</div>
 </body>
 </html>

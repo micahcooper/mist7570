@@ -1,10 +1,3 @@
-/**
- * TODO
- * 1- create instance variables
- * 2- getters/setters
- * 3- calculate instance variables
- * 4- create amort table spit out
- */
 package model;
 
 
@@ -26,7 +19,6 @@ public class Amortization{
 	 * Constructor with no arguments
 	 */
 	public Amortization() {
-		// TODO Auto-generated constructor stub
 		super();
 		this.loan = new Loan();
 	}
@@ -35,7 +27,6 @@ public class Amortization{
 	 * @param loan the Loan object to be amortized
 	 */
 	public Amortization(Loan loan) {
-		// TODO Auto-generated constructor stub
 		super();
 		this.loan = loan;
 		//keep track of the current balance of the loan
@@ -104,7 +95,7 @@ public class Amortization{
 	 * @return the current balance of the loan after applying the current monthly payment
 	 */
 	private double calculateCurrentBalanceAfterPayment(){
-		System.out.println("Balance: "+currentBalance+" - amount paid: "+this.calculateMonthlyPaymentToBalance(currentBalance));
+		//System.out.println("Balance: "+currentBalance+" - amount paid: "+this.calculateMonthlyPaymentToBalance(currentBalance));
 		this.currentBalance -= this.calculateMonthlyPaymentToBalance(currentBalance);
 		return this.currentBalance;
 	}
