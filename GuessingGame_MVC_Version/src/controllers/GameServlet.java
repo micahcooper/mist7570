@@ -1,9 +1,12 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +21,18 @@ import model.GameNumber;
 		description = "A servlet to control our simple guessing game", 
 		urlPatterns = { 
 				"/GameServlet", 
-				"/doGuess"
+				"/doGuess"},
+		initParams = { 
+				@WebInitParam(name = "minimum", value = "0", description = "min guess range"),
+				@WebInitParam(name = "maximum", value = "1000", description = "max guess range"),
+				@WebInitParam(name = "guesses", value = "1", description = "num of guesses"),
+				@WebInitParam(name = "minimum", value = "0", description = "min guess range")
+				
 		})
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private int maximum,minimum;
+	GameNumber guesses,target;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,6 +41,18 @@ public class GameServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		Random randy = new Random();
+		this.maximum = Integer.parseInt(config.getInitParameter("maximum"));
+		this.minimum = Integer.parseInt(config.getInitParameter("minimum"));
+		this.guesses = new GameNumber( Integer.parseInt(config.getInitParameter("guesses")) );
+		
+		target = new GameNumber(randy.nextInt(this.maximum));
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,15 +67,15 @@ public class GameServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get input - target, guess, number of guesses, minimum and maximum
 		GameNumber guess = new GameNumber(Integer.parseInt(request.getParameter("guess")));
-		GameNumber target = new GameNumber(Integer.parseInt(request.getParameter("target")));
-		GameNumber guesses = new GameNumber(Integer.parseInt(request.getParameter("guesses")));
+		//GameNumber target = new GameNumber(Integer.parseInt(request.getParameter("target")));
+		//GameNumber guesses = new GameNumber(Integer.parseInt(request.getParameter("guesses")));
 		
 		// initialize output
 		String msg = "";
 		String url = "/guess.jsp";
 		
 		// compare the guess with the target
-	   if( guess.getValue() == target.getValue() ){
+	   if( guess.getValue() == this.target.getValue() ){
 		   // winner
 		   msg = "Correct! You got it in " + guesses.getValue() + " guesses.";
 		   url = "/correct.jsp";
@@ -61,10 +84,10 @@ public class GameServlet extends HttpServlet {
 		   guesses.increment();
 		   if ( guess.getValue() < target.getValue() ) {
 			   //low
-			   msg = "Incorrect guess! Guess higher next time.";
+			   msg = "Incorrect guess! Guess higher next time."+target.getValue();
 		   } else {
 			   // high
-			   msg = "Incorrect guess! Guess lower next time.";
+			   msg = "Incorrect guess! Guess lower next time."+target.getValue();
 		   }
 	   }
 	   
