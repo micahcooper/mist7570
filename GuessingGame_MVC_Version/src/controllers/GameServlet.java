@@ -46,12 +46,12 @@ public class GameServlet extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		Random randy = new Random();
 		this.maximum = Integer.parseInt(config.getInitParameter("maximum"));
 		this.minimum = Integer.parseInt(config.getInitParameter("minimum"));
 		this.guesses = new GameNumber( Integer.parseInt(config.getInitParameter("guesses")) );
 		
-		target = new GameNumber(randy.nextInt(this.maximum));
+		target = new GameNumber();
+		target.setRandom(minimum, maximum);
 	}
 
 	/**
