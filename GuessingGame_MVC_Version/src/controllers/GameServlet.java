@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.GameNumber;
 
@@ -25,9 +26,7 @@ import model.GameNumber;
 		initParams = { 
 				@WebInitParam(name = "minimum", value = "0", description = "min guess range"),
 				@WebInitParam(name = "maximum", value = "1000", description = "max guess range"),
-				@WebInitParam(name = "guesses", value = "1", description = "num of guesses"),
-				@WebInitParam(name = "minimum", value = "0", description = "min guess range")
-				
+				@WebInitParam(name = "guesses", value = "1", description = "num of guesses")
 		})
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +51,8 @@ public class GameServlet extends HttpServlet {
 		
 		target = new GameNumber();
 		target.setRandom(minimum, maximum);
+		
+		
 	}
 
 	/**
@@ -69,6 +70,8 @@ public class GameServlet extends HttpServlet {
 		GameNumber guess = new GameNumber(Integer.parseInt(request.getParameter("guess")));
 		//GameNumber target = new GameNumber(Integer.parseInt(request.getParameter("target")));
 		//GameNumber guesses = new GameNumber(Integer.parseInt(request.getParameter("guesses")));
+		HttpSession session = request.getSession();
+		session.setAttribute("target", this.target);
 		
 		// initialize output
 		String msg = "";
@@ -79,9 +82,11 @@ public class GameServlet extends HttpServlet {
 		   // winner
 		   msg = "Correct! You got it in " + guesses.getValue() + " guesses.";
 		   url = "/correct.jsp";
+		   init();
 	   } else {
 		   // next guess
-		   guesses.increment();
+		   this.guesses.increment();
+		   session.setAttribute("guesses", guesses);
 		   if ( guess.getValue() < target.getValue() ) {
 			   //low
 			   msg = "Incorrect guess! Guess higher next time."+target.getValue();
