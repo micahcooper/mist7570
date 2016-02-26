@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.GameNumber;
+import model.Message;
 
 /**
  * Servlet implementation class GameServlet
@@ -31,6 +32,7 @@ public class GameServlet extends HttpServlet {
 	private int maximum,minimum;
 	private GameNumber guesses,target;
 	private boolean newGame;
+	Message msg;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -44,13 +46,12 @@ public class GameServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		//setup the servlet init variables
-		//this.maximum = Integer.parseInt(config.getInitParameter("maximum"));
-		//this.minimum = Integer.parseInt(config.getInitParameter("minimum"));
-		//his.guesses = new GameNumber( Integer.parseInt(config.getInitParameter("guesses")) );
+		this.maximum = Integer.parseInt(config.getInitParameter("maximum"));
+		this.minimum = Integer.parseInt(config.getInitParameter("minimum"));
 		
 		//create a target number for the new game
 		target = new GameNumber();
-		//target.setRandom(minimum, maximum);
+		target.setRandom(minimum, maximum);
 		
 		//set newGame flag for processing logic
 		newGame = true;
@@ -78,67 +79,46 @@ public class GameServlet extends HttpServlet {
 		// get input - guess, grab the session from the request object
 		GameNumber guess;
 		HttpSession session = request.getSession();
-		int minimum, maximum;
 		// initialize output parameters
-		String msg = "";
+		//String msg = "";
 		String url = "/guess.jsp";
-		boolean error = false;
 		this.guesses = (GameNumber)session.getAttribute("guesses");
-		minimum = (int)session.getAttribute("minimum");
-		maximum = (int)session.getAttribute("maximum");
-		target.setRandom(minimum, maximum);
 
-		try{
-			guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
-			
-			if(newGame){
-				session.setAttribute("target", this.target);
-				//session.setAttribute("guesses", guesses);
-				newGame=false;
-			}
-			else{
-					target = (GameNumber)session.getAttribute("target");
-					guesses = (GameNumber)session.getAttribute("guesses");
-			}
+		guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
+		msg = (Message)session.getAttribute("msg");
 		
-			// compare the guess with the target
-		   if( guess.getValue() == target.getValue() ){
-			   // winner
-			   msg = "Correct! You got it in " + guesses.getValue() + " guesses.";
-			   url = "/correct.jsp";
-			   resetGame();
-		   } else {
-			   // next guess
-			   this.guesses.increment();
-			   if ( guess.getValue() < target.getValue() ) {
-				   //low
-				   msg = "Incorrect guess! Guess higher next time.";
-			   } else {
-				   // high
-				   msg = "Incorrect guess! Guess lower next time.";
-			   }
-		   }
-		}catch( Exception e ){
-			init();
-			newGame = true;
-			error = true;
-			msg = "<p>Please be aware that two or more people are playing this game right now.</p>";
-			url = "/index.jsp";
-			// add values to request object to pass to the destination
-			 request.setAttribute("msg", msg);
-			   
-			   // send control to the next component
-			  RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-			  dispatcher.forward(request, response);
+		if(newGame){
+			session.setAttribute("target", this.target);
+			//session.setAttribute("guesses", guesses);
+			newGame=false;
 		}
-	   if(!error){
-		   // add values to request object to pass to the destination
-		   request.setAttribute("msg", msg);
-		   
-		   // send control to the next component
-		   RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		   dispatcher.forward(request, response);
+		else{
+				target = (GameNumber)session.getAttribute("target");
+				guesses = (GameNumber)session.getAttribute("guesses");
+		}
+	
+		// compare the guess with the target
+	   if( guess.getValue() == target.getValue() ){
+		   // winner
+		   msg.setCorrectMessage("Correct! You got it in " + guesses.getValue() + " guesses.");
+		   url = "/correct.jsp";
+		   resetGame();
+	   } else {
+		   // next guess
+		   this.guesses.increment();
+		   if ( guess.getValue() < target.getValue() ) {
+			   //low
+			   msg.setGuessMessage("Incorrect guess! Guess higher next time.");
+		   } else {
+			   // high
+			   msg.setGuessMessage("Incorrect guess! Guess lower next time.");
+		   }
 	   }
+	   
+	   // send control to the next component
+	   RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+	   dispatcher.forward(request, response);
+
 		
 	}
 	

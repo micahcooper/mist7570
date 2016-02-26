@@ -3,7 +3,7 @@
 <jsp:useBean id="guesses" scope="session" class="model.GameNumber" >
 	<jsp:setProperty name="guesses" property="value" value="1" />
 </jsp:useBean>
-<jsp:useBean id="max" scope="session" class="java.lang.Integer" />
+<jsp:useBean id="msg" scope="session" class="model.Message" />
 
 <html>
 <head>
@@ -16,7 +16,7 @@
 	<div id=container>
 		 <h1>Guessing Game - MVC Version</h1>
 		 
-		 <p>${msg}</p>
+		 <p><jsp:getProperty name="msg" property="guessMessage" /></p>
 		 
 		 <form name="guessForm" action="doGuess" method="post" onsubmit="return validateForm()">
 			<label id="guessLabel">Guess <jsp:getProperty name="guesses" property="value" />:</label>

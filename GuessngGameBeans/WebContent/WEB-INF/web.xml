@@ -3,6 +3,5 @@
   <display-name>GuessingGameBeans</display-name>
   <welcome-file-list>
     <welcome-file>guess.jsp</welcome-file>
-
   </welcome-file-list>
 </web-app>

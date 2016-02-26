@@ -3,14 +3,12 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Random;
 
-/**
- * @author craigpiercy
- *
- */
-public class GameNumber {
-	
+
+public class GameNumber implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int value;
 
 	/**
