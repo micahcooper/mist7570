@@ -4,6 +4,7 @@
 	<jsp:setProperty name="guesses" property="value" value="1" />
 </jsp:useBean>
 <jsp:useBean id="msg" scope="session" class="model.Message" />
+<jsp:useBean id="target" scope="session" class="model.GameNumber" />
 
 <html>
 <head>
@@ -24,7 +25,7 @@
 			<input type="submit" name="submit" value="Make Guess">
 		 </form>
 		 
-		 <p style=text-align:right;><em>For testing purposes only: ${target.getValue()}</em></p>
+		 <p style=text-align:right;><em>For testing purposes only: <jsp:getProperty name="target" property="value" /></em></p>
 	</div>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class GameNumber implements Serializable {
 	 * 
 	 */
 	public GameNumber() {
-		value = 0;
+		value = -1;
 	}
 
 	/**
