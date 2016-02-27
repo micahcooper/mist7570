@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div id=container>
-		<H1>Guessing Game - MVC Version</h1>
+		<H1>Guessing Game - Bean Version</h1>
 		<p><jsp:getProperty name="msg" property="correctMessage" /></p>
 		<p><a href=doGuess>Play Again</a></p>
 	</div>

@@ -21,16 +21,12 @@ import model.Message;
 		description = "A servlet to control our simple guessing game", 
 		urlPatterns = { 
 				"/GameServlet", 
-				"/doGuess"},
-		initParams = { 
-				@WebInitParam(name = "minimum", value = "0", description = "min guess range"),
-				@WebInitParam(name = "maximum", value = "1000", description = "max guess range")
-		})
+				"/doGuess"}
+		)
 
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int maximum,minimum;
-	private GameNumber guesses,target;
+	private GameNumber guesses,target,maximum,minimum;
 	private boolean newGame;
 	Message msg;
        
@@ -39,31 +35,31 @@ public class GameServlet extends HttpServlet {
      */
     public GameServlet() {
         super();
-        //if the servlet is accessed directly before going to guess.jsp
+        
+        //if the servlet is accessed directly before guess.jsp, setup some initial values
         msg = new Message();
         guesses = new GameNumber(1);
+        minimum = new GameNumber(0);
+        maximum = new GameNumber(1000);
+		//set newGame flag for processing logic
+		newGame = true;
+		
+		//create a target number for the new game
+		target = new GameNumber();
+		target.setRandom(minimum.getValue(), maximum.getValue());
     }
     
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		//setup the servlet init variables
-		this.maximum = Integer.parseInt(config.getInitParameter("maximum"));
-		this.minimum = Integer.parseInt(config.getInitParameter("minimum"));
-		
-		//create a target number for the new game
-		target = new GameNumber();
-		target.setRandom(minimum, maximum);
-		
-		//set newGame flag for processing logic
-		newGame = true;
+
 	}
 	
 	private void resetGame(){
 		//reset the target, set guesses to 1, and newGame flag to true
 		target = new GameNumber();
-		this.target.setRandom(1, 1000);
+		target.setRandom(minimum.getValue(), maximum.getValue());
 		this.guesses.setValue(1);
 		newGame=true;
 		System.out.println("here");
@@ -93,6 +89,8 @@ public class GameServlet extends HttpServlet {
 		else{
 				target = (GameNumber)session.getAttribute("target");
 				guesses = (GameNumber)session.getAttribute("guesses");
+				minimum = (GameNumber)session.getAttribute("minimum");
+				maximum = (GameNumber)session.getAttribute("maximum");
 				msg = (Message)session.getAttribute("msg");
 				this.guesses = (GameNumber)session.getAttribute("guesses");
 				guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
