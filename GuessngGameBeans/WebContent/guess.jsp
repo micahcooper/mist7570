@@ -23,7 +23,7 @@
 	<div id=container>
 		 <h1>Guessing Game - Bean Version</h1>
 		 <p>Make a guess between <jsp:getProperty name="minimum" property="value" /> and <jsp:getProperty name="maximum" property="value" />.</p>
-		 <p><jsp:getProperty name="msg" property="guessMessage" /></p>
+		 <p><jsp:getProperty name="msg" property="message" /></p>
 		 
 		 <form name="guessForm" action="doGuess" method="post" onsubmit="return validateForm()">
 			<label id="guessLabel">Guess <jsp:getProperty name="guesses" property="value" />:</label>
