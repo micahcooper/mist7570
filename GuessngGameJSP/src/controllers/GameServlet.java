@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.GameNumber;
-import model.Message;
+import model.GameLogic;
+import model.GameMessage;
 
 /**
  * Servlet implementation class GameServlet
@@ -26,10 +29,11 @@ import model.Message;
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//changed minimum,maximum to GameNumber so the session variable can be used in guess.jsp
-	private GameNumber guesses,target,maximum,minimum;
-	//vairable to help with resetting values after the target is correctly guessed
+	private GameNumber guesses,target,maximum,minimum,guess;
+	//variable to help with resetting values after the target is correctly guessed
 	private boolean newGame;
-	Message msg;
+	GameMessage msg;
+	HashMap<String, GameLogic> games;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,16 +42,17 @@ public class GameServlet extends HttpServlet {
         super();
         //since we are not using initialization values, i'm using the default constructor to setup some values
         //if the servlet is accessed directly before guess.jsp, setup some initial values
-        msg = new Message();
+        msg = new GameMessage();
         guesses = new GameNumber(1);
-        minimum = new GameNumber(0);
-        maximum = new GameNumber(1000);
+        //minimum = new GameNumber(0);
+        //maximum = new GameNumber(1000);
 		//set newGame flag for processing logic
 		newGame = true;
-		
+		guess = new GameNumber();
 		//create a target number for the new game
+		System.out.println("in constructor");
 		target = new GameNumber();
-		target.setRandom(minimum.getValue(), maximum.getValue());
+		//target.setRandom(minimum.getValue(), maximum.getValue());
     }
     
 	/**
@@ -62,18 +67,12 @@ public class GameServlet extends HttpServlet {
 	 */
 	private void resetGame(){
 		//reset the target, set guesses to 1, and newGame flag to true
-		target = new GameNumber();
+		//target = new GameNumber();
 		target.setRandom(minimum.getValue(), maximum.getValue());
-		this.guesses.setValue(1);
+		this.guesses.setValue(0);
 		newGame=true;
+		this.guess = new GameNumber();
 		//System.out.println("here");
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
 	}
 
 	/**
@@ -81,33 +80,44 @@ public class GameServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get input - guess, grab the session from the request object
-		GameNumber guess;
+		//GameNumber guess;
 		HttpSession session = request.getSession();
+		session.getId();
+		games = new HashMap<String,GameLogic>();
+		
 		// initialize output parameters
 		String url = "/guess.jsp";
-		
+		System.out.println("Target: "+target.getValue());
 		//if this is a new game put the target in the session variable, else grab all needed values from the session, which should have been set in guess.jsp
-		if(newGame){
-			newGame=false;
-			session.setAttribute("target", this.target);
-		}
+		if(guess.getValue() == -1){
+			System.out.println("in the if guess == -1 statement");
+			
+			target.setRandom(minimum.getValue(), maximum.getValue());
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+			dispatcher.forward(request, response);
+		}		
 		else{
-				target = (GameNumber)session.getAttribute("target");
+			this.guesses = (GameNumber)session.getAttribute("guesses");	
+			target = (GameNumber)session.getAttribute("target");
 				guesses = (GameNumber)session.getAttribute("guesses");
 				minimum = (GameNumber)session.getAttribute("minimum");
 				maximum = (GameNumber)session.getAttribute("maximum");
-				msg = (Message)session.getAttribute("msg");
-				this.guesses = (GameNumber)session.getAttribute("guesses");
+				msg = (GameMessage)session.getAttribute("msg");
+				
 				//grab the new guess from the request object
 				guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
 				//to make error checking easier, move game logic to it's own method, if a win(true) change url to correct.jsp
 				if(playTheGame(guess))
 					url="/correct.jsp";
+				
+				// send control to the next component
+				   RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+				   dispatcher.forward(request, response);
 		}
+		
 	   
-	   // send control to the next component
-	   RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-	   dispatcher.forward(request, response);
+	   
 	}
 	
 	private boolean playTheGame(GameNumber guess){

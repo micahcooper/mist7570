@@ -9,14 +9,14 @@ import java.io.Serializable;
  * @author micah cooper
  *
  */
-public class Message implements Serializable {
+public class GameMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	String message;
 
 	/**
 	 * 
 	 */
-	public Message() {
+	public GameMessage() {
 		// setup blank values to avoid errors
 		message = "";
 	}

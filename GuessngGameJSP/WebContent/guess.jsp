@@ -3,7 +3,7 @@
 <jsp:useBean id="guesses" scope="session" class="model.GameNumber" >
 	<jsp:setProperty name="guesses" property="value" value="1" />
 </jsp:useBean>
-<jsp:useBean id="msg" scope="session" class="model.Message" />
+<jsp:useBean id="msg" scope="session" class="model.GameMessage" />
 <jsp:useBean id="target" scope="session" class="model.GameNumber" />
 <jsp:useBean id="minimum" scope="session" class="model.GameNumber" >
 	<jsp:setProperty name="minimum" property="value" value="1" />

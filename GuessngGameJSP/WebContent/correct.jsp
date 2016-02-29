@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Guessing Game - MVC Version</title>
 	<link rel="stylesheet" type="text/css" href="stylesheet.css" />
-	<jsp:useBean id="msg" scope="session" class="model.Message" />
+	<jsp:useBean id="msg" scope="session" class="model.GameMessage" />
 </head>
 <body>
 	<div id=container>
