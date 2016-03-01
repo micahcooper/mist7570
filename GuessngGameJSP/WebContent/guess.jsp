@@ -17,17 +17,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 	<script src="verify.js"></script>
 	<link rel="stylesheet" type="text/css" href="stylesheet.css" />
-	<title>Guessing Game - MVC Version</title>
+	<title>Guessing Game - JSP Version</title>
 </head>
 <body>
 	<div id=container>
-		 <h1>Guessing Game - Bean Version</h1>
+		 <h1>Guessing Game - JSP Version</h1>
 		 <p>Make a guess between <jsp:getProperty name="minimum" property="value" /> and <jsp:getProperty name="maximum" property="value" />.</p>
 		 <p><jsp:getProperty name="msg" property="message" /></p>
 		 
 		 <form name="guessForm" action="doGuess" method="post" onsubmit="return validateForm()">
 			<label id="guessLabel">Guess <jsp:getProperty name="guesses" property="value" />:</label>
-			<input type="text" name="guess" /><br />
+			<input type="text" name="guess" value=1 /><br />
 			<input type="submit" name="submit" value="Make Guess">
 		 </form>
 		 
