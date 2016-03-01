@@ -40,6 +40,7 @@ public class GameServlet extends HttpServlet {
      */
     public GameServlet() {
         super();
+		System.out.println("Servlet constructed: "+this.serialVersionUID);
         //since we are not using initialization values, i'm using the default constructor to setup some values
         //if the servlet is accessed directly before guess.jsp, setup some initial values
         msg = new GameMessage();
@@ -50,7 +51,7 @@ public class GameServlet extends HttpServlet {
 		newGame = true;
 		guess = new GameNumber();
 		//create a target number for the new game
-		System.out.println("in constructor");
+
 		target = new GameNumber();
 		//target.setRandom(minimum.getValue(), maximum.getValue());
     }
@@ -66,13 +67,22 @@ public class GameServlet extends HttpServlet {
 	 * resets the game: new target number, flip newGame flag
 	 */
 	private void resetGame(){
+		System.out.println("Reset game, id:"+this.serialVersionUID);
 		//reset the target, set guesses to 1, and newGame flag to true
 		//target = new GameNumber();
-		target.setRandom(minimum.getValue(), maximum.getValue());
-		this.guesses.setValue(0);
+		target.setRandom(minimum.getValue(), maximum.getValue(), "reset game");
+		this.guesses.setValue(1);
 		newGame=true;
 		this.guess = new GameNumber();
 		//System.out.println("here");
+		msg.setMessage("");
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doPost(request, response);
 	}
 
 	/**
@@ -82,42 +92,50 @@ public class GameServlet extends HttpServlet {
 		// get input - guess, grab the session from the request object
 		//GameNumber guess;
 		HttpSession session = request.getSession();
-		session.getId();
+		String sessionID = session.getId();
 		games = new HashMap<String,GameLogic>();
-		
+		//grab the new guess from the request object
+	try{
+		guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
+	}catch(Exception e){ System.out.println("caught no-guess");guess = new GameNumber();}
 		// initialize output parameters
 		String url = "/guess.jsp";
-		System.out.println("Target: "+target.getValue());
+		System.out.println("Target: "+target.getValue() + " guess: " +guess.getValue() );
 		//if this is a new game put the target in the session variable, else grab all needed values from the session, which should have been set in guess.jsp
+		
+		//new game, no guesses yet
 		if(guess.getValue() == -1){
-			System.out.println("in the if guess == -1 statement");
-			
-			target.setRandom(minimum.getValue(), maximum.getValue());
+			System.out.println("==NEW GAME: "+sessionID+" ==");
+			newGame = true;
+			//target.setRandom(minimum.getValue(), maximum.getValue());
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);
 		}		
 		else{
-			this.guesses = (GameNumber)session.getAttribute("guesses");	
-			target = (GameNumber)session.getAttribute("target");
-				guesses = (GameNumber)session.getAttribute("guesses");
+			//were playing a game, check to see if target has been setup
+			if (target.getValue() == -1){
 				minimum = (GameNumber)session.getAttribute("minimum");
 				maximum = (GameNumber)session.getAttribute("maximum");
-				msg = (GameMessage)session.getAttribute("msg");
+					
+				target.setRandom(minimum.getValue(), maximum.getValue(),"playing game" );
+				//System.out.println("creating new random number: "+target.getValue());
+			}
+			
+			target = (GameNumber)session.getAttribute("target");
+			guesses = (GameNumber)session.getAttribute("guesses");
+			msg = (GameMessage)session.getAttribute("msg");
 				
-				//grab the new guess from the request object
-				guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
-				//to make error checking easier, move game logic to it's own method, if a win(true) change url to correct.jsp
-				if(playTheGame(guess))
-					url="/correct.jsp";
-				
-				// send control to the next component
-				   RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-				   dispatcher.forward(request, response);
+			//grab the new guess from the request object
+			guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
+			//to make error checking easier, move game logic to it's own method, if a win(true) change url to correct.jsp
+			if(playTheGame(guess))
+				url="/correct.jsp";
+			
+			// send control to the next component
+			   RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+			   dispatcher.forward(request, response);
 		}
-		
-	   
-	   
 	}
 	
 	private boolean playTheGame(GameNumber guess){

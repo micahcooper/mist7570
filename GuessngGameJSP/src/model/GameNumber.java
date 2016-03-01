@@ -57,6 +57,12 @@ public class GameNumber implements Serializable {
 		Random random = new Random();
 		this.value = random.nextInt(maximum - minimum) + minimum;
 	}
+	public void setRandom(int minimum, int maximum, String caller){
+		
+		Random random = new Random();
+		this.value = random.nextInt(maximum - minimum) + minimum;
+		System.out.println("GameNumber: create random number: "+this.value+", from: "+caller);
+	}
 	
 	/**
 	 * a simple method to adjust the value up 1 unit
