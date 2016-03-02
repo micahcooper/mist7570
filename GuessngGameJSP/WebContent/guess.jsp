@@ -16,6 +16,7 @@
 <body>
 	<div id=container>
 		 <h1>Guessing Game - JSP Version</h1>
+		 <p style=float:right;><a href="createGame.jsp">Change game parameters</a></p>
 		 <p>Make a guess between ${minimum} and ${maximum}.</p>
 		 <p><jsp:getProperty name="msg" property="message" /></p>
 		 

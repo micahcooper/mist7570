@@ -48,6 +48,7 @@ public class GameServlet extends HttpServlet {
 		target = new GameNumber();
 		//create the hashmap to hold the concurrent games
 		games = new HashMap<String,GameLogic>();
+		averages = new HashMap<Integer, Double>();
     }
     
 	/**
@@ -79,13 +80,14 @@ public class GameServlet extends HttpServlet {
 			minimum = Integer.parseInt(request.getParameter("minimum"));
 		if( request.getParameter("maximum") != null ) 
 			maximum = Integer.parseInt(request.getParameter("maximum"));
+
 		
+		//doesn't hurt to do this even if they don't exist
 		session.setAttribute("minimum", minimum);
 		session.setAttribute("maximum", maximum);
 		
-		//new game, no guesses yet
+		//new game
 		if( games.get(session.getId()) == null ){
-			
 			System.out.println("==NEW GAME: "+session.getId()+" ==");
 			if( request.getParameter("minimum") == null )
 				url = "/createGame.jsp";
@@ -106,10 +108,14 @@ public class GameServlet extends HttpServlet {
 				//a new target is not set, let's create one
 				game = new GameLogic(minimum,maximum);
 				games.put(session.getId(), game);
-
 				session.setAttribute("target", target);
-				//session.setAttribute("guesses", game.getGuesses().getValue());
 			}
+			if( request.getParameter("minimum") != null ){
+				game = new GameLogic(minimum,maximum);
+				games.put(session.getId(), game);
+				session.setAttribute("target", target);
+			}
+				
 			game = games.get(session.getId());
 			
 			//grab the new guess from the request object
@@ -123,9 +129,12 @@ public class GameServlet extends HttpServlet {
 			session.setAttribute("target", game.getTarget());
 			session.setAttribute("msg", game.getMsg());
 			
+			//if guess is not null, check check the guess
 			if( request.getParameter("guess") != null )
-				if(game.checkGuess(guess))
+				if(game.checkGuess(guess)){
 					url="/correct.jsp";
+					//averages.put(maximum-minimum, game.getGuesses().getValue());
+				}
 			
 			// send control to the next component
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
