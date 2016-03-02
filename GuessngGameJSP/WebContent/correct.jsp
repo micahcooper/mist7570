@@ -9,7 +9,7 @@
 <body>
 	<div id=container>
 		<H1>Guessing Game - JSP Version</h1>
-		<p><jsp:getProperty name="msg" property="message" /></p>
+		<p>${msg.message}</p>
 		<p><a href=guess.jsp>Play Again</a></p>
 	</div>
 </body>

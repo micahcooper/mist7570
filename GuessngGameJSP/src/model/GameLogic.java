@@ -3,6 +3,8 @@
  */
 package model;
 
+import java.util.HashMap;
+
 /**
  * @author mrcooper
  *
@@ -11,10 +13,12 @@ public class GameLogic {
 	GameNumber guesses,target;
 	GameMessage msg;
 	int maximum, minimum;
+	HashMap<Integer, Double> averages; 
 	
 	public GameLogic(){
 		msg = new GameMessage();
 		target = new GameNumber();
+		guesses = new GameNumber(1);
 		System.out.println("New game logic started");
 	}
 	
@@ -30,7 +34,6 @@ public class GameLogic {
 		target = new GameNumber();
 		guesses = new GameNumber(1);
 		target.setRandom(minimum, maximum);
-		
 		System.out.println("New game logic started with min/max");
 	}
 	
@@ -63,13 +66,9 @@ public class GameLogic {
 	private void resetGame(){
 		System.out.println("Reset game min:"+minimum+" max:"+maximum);
 		//reset the target, set guesses to 1, and newGame flag to true
-		//target = new GameNumber();
 		target.setRandom(minimum, maximum, "reset game");
 		this.guesses.setValue(1);
-		//newGame=true;
-		//this.guess = new GameNumber();
-		//System.out.println("here");
-		//msg.setMessage("");
+		
 	}
 
 	public GameNumber getGuesses() {

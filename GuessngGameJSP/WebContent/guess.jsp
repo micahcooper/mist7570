@@ -5,12 +5,6 @@
 </jsp:useBean>
 <jsp:useBean id="msg" scope="session" class="model.GameMessage" />
 <jsp:useBean id="target" scope="session" class="model.GameNumber" />
-<jsp:useBean id="minimum" scope="session" class="model.GameNumber" >
-	<jsp:setProperty name="minimum" property="value" value="1" />
-</jsp:useBean>
-<jsp:useBean id="maximum" scope="session" class="model.GameNumber" >
-	<jsp:setProperty name="maximum" property="value" value="1000" />
-</jsp:useBean>
 
 <html>
 <head>
@@ -22,11 +16,11 @@
 <body>
 	<div id=container>
 		 <h1>Guessing Game - JSP Version</h1>
-		 <p>Make a guess between <jsp:getProperty name="minimum" property="value" /> and <jsp:getProperty name="maximum" property="value" />.</p>
+		 <p>Make a guess between ${minimum} and ${maximum}.</p>
 		 <p><jsp:getProperty name="msg" property="message" /></p>
 		 
 		 <form name="guessForm" action="doGuess" method="post" onsubmit="return validateForm()">
-			<label id="guessLabel">Guess <jsp:getProperty name="guesses" property="value" />:</label>
+			<label id="guessLabel">Guess ${guesses.value}:</label>
 			<input type="text" name="guess" value=1 /><br />
 			<input type="submit" name="submit" value="Make Guess">
 		 </form>
