@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.GameNumber;
-import model.GameLogic;
-import model.GameMessage;
+import model.*;
 
 /**
  * Servlet implementation class GameServlet
@@ -31,8 +29,10 @@ public class GameServlet extends HttpServlet {
 	private GameNumber target,guess;
 	int minimum, maximum;
 	GameMessage msg;
+	GameAverage gameAverage;
 	HashMap<String, GameLogic> games;
-	HashMap<Integer, Double> averages;
+	HashMap<Integer, GameAverage> averages;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -48,7 +48,7 @@ public class GameServlet extends HttpServlet {
 		target = new GameNumber();
 		//create the hashmap to hold the concurrent games
 		games = new HashMap<String,GameLogic>();
-		averages = new HashMap<Integer, Double>();
+		averages = new HashMap<Integer, GameAverage>();
     }
     
 	/**
@@ -107,6 +107,7 @@ public class GameServlet extends HttpServlet {
 			if ( game.getTarget().getValue() == -1){
 				//a new target is not set, let's create one
 				game = new GameLogic(minimum,maximum);
+				System.out.println(session.getId());
 				games.put(session.getId(), game);
 				session.setAttribute("target", target);
 			}
@@ -129,11 +130,20 @@ public class GameServlet extends HttpServlet {
 			session.setAttribute("target", game.getTarget());
 			session.setAttribute("msg", game.getMsg());
 			
+			
 			//if guess is not null, check check the guess
 			if( request.getParameter("guess") != null )
 				if(game.checkGuess(guess)){
 					url="/correct.jsp";
-					//averages.put(maximum-minimum, game.getGuesses().getValue());
+					if( averages.get(maximum-minimum) == null )
+						gameAverage = new GameAverage( (GameNumber)session.getAttribute("guesses") );
+					else
+						gameAverage.updateAverage( (GameNumber)session.getAttribute("guesses") );
+					System.out.println(maximum-minimum);
+					averages.put(maximum-minimum,gameAverage);
+					System.out.println("Totatl guesses: "+averages.get(maximum-minimum).getNumberOfTotalGuesses());
+					System.out.println( "SIZE: "+averages.size() );
+					session.setAttribute("averages", averages);
 				}
 			
 			// send control to the next component

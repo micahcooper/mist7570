@@ -10,6 +10,9 @@
 		<H1>Guessing Game - JSP Version</h1>
 		<p>${msg.message}</p>
 		<p><a href=guess.jsp>Play Again</a></p>
+		<p>${minimum} ${maximum} : ${maximum-minimum }</p>
+		<p>Averages: ${ averages[maximum-minimum].getNumberOfTotalGuesses }</p>
+		<p>${ averages.size() }</p>
 	</div>
 </body>
 </html>
