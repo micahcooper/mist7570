@@ -24,7 +24,7 @@ public class GameLogic {
 	
 	public GameLogic(GameNumber target){
 		msg = new GameMessage();
-		System.out.println("HI with target and guess");
+		System.out.println("New game logic started with target and guess");
 	}
 	
 	public GameLogic(int minimum, int maximum){
@@ -42,8 +42,8 @@ public class GameLogic {
 		// compare the guess with the target
 		   if( guess.getValue() == target.getValue() ){
 			   // winner
-			   msg.setMessage("Correct! You got it in " + guesses.getValue() + " guesses.");
-			   resetGame();
+			   msg.setCorrectMessage("Correct! You got it in " + guesses.getValue() + " guesses.");
+			   //resetGame();
 			   return true;
 		   } else {
 			   // next guess
@@ -63,10 +63,11 @@ public class GameLogic {
 	/**
 	 * resets the game: new target number, flip newGame flag
 	 */
-	private void resetGame(){
+	public void resetGame(){
 		System.out.println("Reset game min:"+minimum+" max:"+maximum);
 		//reset the target, set guesses to 1, and newGame flag to true
 		target.setRandom(minimum, maximum, "reset game");
+		this.msg.setMessage("");
 		this.guesses.setValue(1);
 		
 	}
@@ -110,5 +111,4 @@ public class GameLogic {
 	public void setMinimum(int minimum) {
 		this.minimum = minimum;
 	}
-
 }

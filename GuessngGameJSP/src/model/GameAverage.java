@@ -10,7 +10,7 @@ package model;
 public class GameAverage {
 	int numberOfGames;
 	int numberOfTotalGuesses;
-	double average;
+	//private double average;
 
 	/**
 	 * 
@@ -19,14 +19,17 @@ public class GameAverage {
 		// TODO Auto-generated constructor stub
 	}
 	public GameAverage(GameNumber guesses) {
-		System.out.println("New game average");
+		
+		//guesses are incremented in the wrong guess logic for gameLogic, so add one for recording a correct guess beyond a single guess
 		numberOfTotalGuesses = guesses.getValue();
 		numberOfGames = 1;
+		System.out.println("!!NEW!! game average with: "+numberOfTotalGuesses);
 	}
 	public void updateAverage(GameNumber guesses){
-		System.out.println("Updating averages");
-		numberOfTotalGuesses += guesses.getValue();
+		
 		numberOfGames++;
+		numberOfTotalGuesses += guesses.getValue();
+		System.out.println("!!UPDATE!! total guesses to: "+numberOfTotalGuesses);
 	}
 	/**
 	 * @return the numberOfGames
@@ -39,7 +42,7 @@ public class GameAverage {
 	 * @param numberOfGames the numberOfGames to set
 	 */
 	public void setNumberOfGames(int numberOfGames) {
-		this.numberOfGames = numberOfGames;
+		//this.numberOfGames = numberOfGames;
 	}
 
 	/**
@@ -53,13 +56,15 @@ public class GameAverage {
 	 * @param nubmerOfTotalGuesses the nubmerOfTotalGuesses to set
 	 */
 	public void setNumberOfTotalGuesses(int nubmerOfTotalGuesses) {
-		this.numberOfTotalGuesses = nubmerOfTotalGuesses;
+		//this.numberOfTotalGuesses = nubmerOfTotalGuesses;
 	}
 
 	/**
 	 * @return the average
 	 */
 	public double getAverage() {
+		double average = (double)numberOfTotalGuesses / (double)numberOfGames;
+		System.out.println("Returning average: "+average+" from guesses: "+numberOfTotalGuesses+", games: "+numberOfGames);
 		return average;
 	}
 
@@ -67,7 +72,8 @@ public class GameAverage {
 	 * @param average the average to set
 	 */
 	public void setAverage(double average) {
-		this.average = average;
+		//I should make sure this method make sense, don't want anyone to update the avearage.
+		//this.average = average;
 	}
 
 }

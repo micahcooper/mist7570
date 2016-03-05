@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class GameMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
-	String message;
+	String message, correctMessage;
 
 	/**
 	 * 
@@ -33,6 +33,20 @@ public class GameMessage implements Serializable {
 	 */
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	/**
+	 * @return the correctMessage
+	 */
+	public String getCorrectMessage() {
+		return correctMessage;
+	}
+
+	/**
+	 * @param correctMessage the correctMessage to set
+	 */
+	public void setCorrectMessage(String correctMessage) {
+		this.correctMessage = correctMessage;
 	}
 	
 

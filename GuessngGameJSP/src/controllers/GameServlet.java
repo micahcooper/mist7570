@@ -31,7 +31,7 @@ public class GameServlet extends HttpServlet {
 	GameMessage msg;
 	GameAverage gameAverage;
 	HashMap<String, GameLogic> games;
-	HashMap<Integer, GameAverage> averages;
+	HashMap<Long, GameAverage> averages;
 	
        
     /**
@@ -48,7 +48,7 @@ public class GameServlet extends HttpServlet {
 		target = new GameNumber();
 		//create the hashmap to hold the concurrent games
 		games = new HashMap<String,GameLogic>();
-		averages = new HashMap<Integer, GameAverage>();
+		averages = new HashMap<Long, GameAverage>();
     }
     
 	/**
@@ -82,7 +82,7 @@ public class GameServlet extends HttpServlet {
 			maximum = Integer.parseInt(request.getParameter("maximum"));
 
 		
-		//doesn't hurt to do this even if they don't exist
+		//doesn't hurt to do this even if they don't exist, if they do we'll use them later
 		session.setAttribute("minimum", minimum);
 		session.setAttribute("maximum", maximum);
 		
@@ -93,6 +93,7 @@ public class GameServlet extends HttpServlet {
 				url = "/createGame.jsp";
 			else{
 				games.put( session.getId(), new GameLogic() );
+				//gameAverage = new GameAverage();
 				session.setAttribute("guesses", games.get(session.getId()).getGuesses() );
 			}
 
@@ -101,16 +102,17 @@ public class GameServlet extends HttpServlet {
 		}		
 		else{
 			//we're playing a game, check to see if game has been setup
-			System.out.println("we're looking to play the game");
+			//System.out.println("we're looking to play the game");
 			game = games.get(session.getId());
 			
 			if ( game.getTarget().getValue() == -1){
 				//a new target is not set, let's create one
 				game = new GameLogic(minimum,maximum);
-				System.out.println(session.getId());
+				//System.out.println(session.getId());
 				games.put(session.getId(), game);
 				session.setAttribute("target", target);
 			}
+			//we are setting new parameters
 			if( request.getParameter("minimum") != null ){
 				game = new GameLogic(minimum,maximum);
 				games.put(session.getId(), game);
@@ -129,23 +131,43 @@ public class GameServlet extends HttpServlet {
 			session.setAttribute("guesses", game.getGuesses());
 			session.setAttribute("target", game.getTarget());
 			session.setAttribute("msg", game.getMsg());
+			session.setAttribute("averages", averages);
 			
 			
 			//if guess is not null, check check the guess
-			if( request.getParameter("guess") != null )
+			if( request.getParameter("guess") != null ){
 				if(game.checkGuess(guess)){
 					url="/correct.jsp";
-					if( averages.get(maximum-minimum) == null )
-						gameAverage = new GameAverage( (GameNumber)session.getAttribute("guesses") );
-					else
-						gameAverage.updateAverage( (GameNumber)session.getAttribute("guesses") );
-					System.out.println(maximum-minimum);
-					averages.put(maximum-minimum,gameAverage);
-					System.out.println("Totatl guesses: "+averages.get(maximum-minimum).getNumberOfTotalGuesses());
-					System.out.println( "SIZE: "+averages.size() );
+					
+					if( averages.get((long)maximum-minimum) == null )
+						gameAverage = new GameAverage( game.getGuesses() );
+					else{
+						gameAverage = averages.get((long)maximum-minimum);
+						gameAverage.updateAverage( game.getGuesses() );
+						System.out.println("in the else statement for checking existing avareages");
+					}
+					averages.put((long)maximum-minimum,gameAverage);
 					session.setAttribute("averages", averages);
+					
+					//System.out.println("Totatl guesses: "+averages.get((long)maximum-minimum).getNumberOfTotalGuesses());
+					System.out.println( "SIZE: "+averages.size() );
+					//
+					session.setAttribute("lastGameGuesses", game.getGuesses().getValue());
+					game.resetGame();
+					
 				}
-			
+				/**else{
+					System.out.println("The guess was wrong");
+					if( averages.get((long)maximum-minimum) == null )
+						gameAverage = new GameAverage( (GameNumber)session.getAttribute("guesses") );
+					else{
+						gameAverage.updateAverage( (GameNumber)session.getAttribute("guesses") );
+						System.out.println("in the else statement for checking existing avareages");
+					}
+					averages.put((long)maximum-minimum,gameAverage);
+					session.setAttribute("averages", averages);
+				}*/
+			}
 			// send control to the next component
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);

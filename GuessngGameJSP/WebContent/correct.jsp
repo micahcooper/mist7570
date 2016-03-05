@@ -8,11 +8,16 @@
 <body>
 	<div id=container>
 		<H1>Guessing Game - JSP Version</h1>
-		<p>${msg.message}</p>
+		<p>${msg.correctMessage}</p>
+		<p>${lastGameGuesses <= averages[maximum-minimum].average ? "Your score was better than average":"Your score was above average" }
 		<p><a href=guess.jsp>Play Again</a></p>
-		<p>${minimum} ${maximum} : ${maximum-minimum }</p>
-		<p>Averages: ${ averages[maximum-minimum].getNumberOfTotalGuesses }</p>
-		<p>${ averages.size() }</p>
+		<hr />
+		<h2>Game Details</h2>
+		<p>No. of guesses: ${lastGameGuesses}</p>
+		<p>Range : ${maximum-minimum }</p>
+		<p>Average: ${ averages[maximum-minimum].average }</p>
+		<p>Total guesses: ${ averages[maximum-minimum].numberOfTotalGuesses }</p>
+		<p>Map size: ${ averages.size() }</p>
 	</div>
 </body>
 </html>
