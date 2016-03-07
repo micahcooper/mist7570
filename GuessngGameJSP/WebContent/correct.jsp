@@ -7,10 +7,11 @@
 </head>
 <body>
 	<div id=container>
-		<h1>Guessing Game - JSP Version</h1>
+		<h1>Guessing Game<br />JSP EL Version</h1>
 		<p>${msg.correctMessage}</p>
 		<p>${lastGameGuesses <= averages[maximum-minimum].average ? "Your score was lower or equaled the average":"Your score was above average" }
 		<p><a href=guess.jsp>Play Again</a></p>
+		<p>${header["User-Agent"] }</p>
 		<hr />
 		<h2>Game Details</h2>
 		<p>No. of guesses from the last game: ${lastGameGuesses}</p>

@@ -30,7 +30,9 @@ public class GameServlet extends HttpServlet {
 	int minimum, maximum;
 	GameMessage msg;
 	GameAverage gameAverage;
+	//map to store concurrent games
 	HashMap<String, GameLogic> games;
+	//map to store guess averages and update dynamically
 	HashMap<Long, GameAverage> averages;
 	
        
@@ -69,7 +71,7 @@ public class GameServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// get input - guess, grab the session from the request object
+		// create the session variable form the request object
 		HttpSession session = request.getSession();
 		GameLogic game;
 		
@@ -89,11 +91,12 @@ public class GameServlet extends HttpServlet {
 		//new game
 		if( games.get(session.getId()) == null ){
 			System.out.println("==NEW GAME: "+session.getId()+" ==");
+			//we didn't get out initial setup parameters
 			if( request.getParameter("minimum") == null )
 				url = "/createGame.jsp";
 			else{
+				//setup the new game by inserting it in the map and throw it in the session
 				games.put( session.getId(), new GameLogic() );
-				//gameAverage = new GameAverage();
 				session.setAttribute("guesses", games.get(session.getId()).getGuesses() );
 			}
 
@@ -101,10 +104,10 @@ public class GameServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}		
 		else{
-			//we're playing a game, check to see if game has been setup
-			//System.out.println("we're looking to play the game");
+			//we're playing a game
 			game = games.get(session.getId());
 			
+			//we don't have a random target yet, so set one up
 			if ( game.getTarget().getValue() == -1){
 				//a new target is not set, let's create one
 				game = new GameLogic(minimum,maximum);
@@ -112,13 +115,14 @@ public class GameServlet extends HttpServlet {
 				games.put(session.getId(), game);
 				session.setAttribute("target", target);
 			}
-			//we are setting new parameters
+			//we are setting new parameters, as long as the parameter exists
 			if( request.getParameter("minimum") != null ){
 				game = new GameLogic(minimum,maximum);
 				games.put(session.getId(), game);
 				session.setAttribute("target", target);
 			}
-				
+			
+			//grab the correct game from the map
 			game = games.get(session.getId());
 			
 			//grab the new guess from the request object
@@ -127,7 +131,8 @@ public class GameServlet extends HttpServlet {
 			else
 				guess =  new GameNumber(Integer.parseInt(request.getParameter("guess")));
 			
-			System.out.println( "Guesses:"+game.getGuesses().getValue() );
+			//System.out.println( "Guesses:"+game.getGuesses().getValue() );
+			//set our session variables
 			session.setAttribute("guesses", game.getGuesses());
 			session.setAttribute("target", game.getTarget());
 			session.setAttribute("msg", game.getMsg());
@@ -139,6 +144,7 @@ public class GameServlet extends HttpServlet {
 				if(game.checkGuess(guess)){
 					url="/correct.jsp";
 					
+					//if we don't have a gameAverage for the current range, create one
 					if( averages.get((long)maximum-minimum) == null )
 						gameAverage = new GameAverage( game.getGuesses() );
 					else{
@@ -146,13 +152,16 @@ public class GameServlet extends HttpServlet {
 						gameAverage.updateAverage( game.getGuesses() );
 						System.out.println("in the else statement for checking existing avareages");
 					}
+					//update the gameAverage in the map and throw it in the session
 					averages.put((long)maximum-minimum,gameAverage);
 					session.setAttribute("averages", averages);
 					
 					//System.out.println("Totatl guesses: "+averages.get((long)maximum-minimum).getNumberOfTotalGuesses());
-					System.out.println( "SIZE: "+averages.size() );
+					//System.out.println( "SIZE: "+averages.size() );
 					//
+					//due to my reset funciton, I need a new way to track the total guesses from the last game
 					session.setAttribute("lastGameGuesses", game.getGuesses().getValue());
+					//reset the game
 					game.resetGame();
 					
 				}

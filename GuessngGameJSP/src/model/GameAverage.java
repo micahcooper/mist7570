@@ -3,11 +3,14 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
- * @author mrcooper
+ * @author micah cooper
  *
  */
-public class GameAverage {
+public class GameAverage implements Serializable{
+	private static final long serialVersionUID = 1L;
 	int numberOfGames;
 	int numberOfTotalGuesses;
 	//private double average;
@@ -19,14 +22,13 @@ public class GameAverage {
 		// TODO Auto-generated constructor stub
 	}
 	public GameAverage(GameNumber guesses) {
-		
-		//guesses are incremented in the wrong guess logic for gameLogic, so add one for recording a correct guess beyond a single guess
+		//constructor to setup values for a new gameAverage
 		numberOfTotalGuesses = guesses.getValue();
 		numberOfGames = 1;
-		System.out.println("!!NEW!! game average with: "+numberOfTotalGuesses);
+		//System.out.println("!!NEW!! game average with: "+numberOfTotalGuesses);
 	}
 	public void updateAverage(GameNumber guesses){
-		
+		//method to update a gameAverage as new games are played
 		numberOfGames++;
 		numberOfTotalGuesses += guesses.getValue();
 		System.out.println("!!UPDATE!! total guesses to: "+numberOfTotalGuesses);

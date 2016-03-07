@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div id=container>
-		<h1>Guessing Game - JSP Version</h1>
+		<h1>Guessing Game<br />JSP EL Version</h1>
 		<h2>Setup the Game</h2>
 		<form name="guessForm" action="doGuess" method="post" onsubmit="return validateForm()">
 			<label id="minLabel">Minimum value:</label><input type="text" name="minimum" value=1 /><br />

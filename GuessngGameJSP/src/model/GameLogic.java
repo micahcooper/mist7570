@@ -3,38 +3,37 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * @author mrcooper
+ * @author micah cooper
  *
  */
-public class GameLogic {
+public class GameLogic implements Serializable{
+	private static final long serialVersionUID = 1L;
 	GameNumber guesses,target;
 	GameMessage msg;
 	int maximum, minimum;
 	HashMap<Integer, Double> averages; 
 	
 	public GameLogic(){
+		//constructor to setup a new gameLogic object without a random number
 		msg = new GameMessage();
 		target = new GameNumber();
 		guesses = new GameNumber(1);
-		System.out.println("New game logic started");
-	}
-	
-	public GameLogic(GameNumber target){
-		msg = new GameMessage();
-		System.out.println("New game logic started with target and guess");
+		//System.out.println("New game logic started");
 	}
 	
 	public GameLogic(int minimum, int maximum){
+		//constructor to setup a gameLogic with a random number
 		this.maximum=minimum;
 		this.maximum=maximum;
 		msg = new GameMessage();
 		target = new GameNumber();
 		guesses = new GameNumber(1);
 		target.setRandom(minimum, maximum);
-		System.out.println("New game logic started with min/max");
+		//System.out.println("New game logic started with min/max");
 	}
 	
 	public boolean checkGuess(GameNumber guess){
