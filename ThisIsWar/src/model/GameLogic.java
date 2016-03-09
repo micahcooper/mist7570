@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  */
 public class GameLogic implements Serializable {
-	private Deck deck;
+	Dealer dealer;
 
 	/**
 	 * 
@@ -23,13 +23,11 @@ public class GameLogic implements Serializable {
 	public GameLogic() {
 		// TODO Auto-generated constructor stub
 		System.out.println("create new game logic");
-		this.deck = new Deck();
-		deck.newDeck();
+		dealer = new Dealer();
 	}
 	
-	public void deal(){
-		deck.shuffleDeck();
-		System.out.println(this.deck.toString());
+	public void start(){
+		dealer.deal();
 	}
 
 }

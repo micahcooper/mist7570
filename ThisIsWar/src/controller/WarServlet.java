@@ -56,7 +56,7 @@ public class WarServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		GameLogic gameLogic = new GameLogic();
 		
-		gameLogic.deal();
+		gameLogic.start();
 		
 		out.println("hi");
 		
