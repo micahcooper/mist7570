@@ -137,8 +137,26 @@ public class Deck implements Serializable {
 	 * @param index
 	 * removes a card at a given location of the deck
 	 */	
-	public void removeCard(int index){
-		cards.remove(index);
+	public Card removeCard(int index){
+		//cards.remove(index);
+		return cards.remove(index);
+	}
+	
+	/**
+	 * @param index
+	 * removes a card at a given location of the deck
+	 */	
+	public Card removeCard(){
+		//cards.remove(index);
+		return cards.remove(cards.size()-1);
+	}
+	
+	/**
+	 * @param index
+	 * removes a card at a given location of the deck
+	 */	
+	public void addCard(Card card){
+		cards.add(card);
 	}
 	
 	/**
