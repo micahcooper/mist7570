@@ -12,5 +12,7 @@
 			<input type="text" name="playTurn" value=1 /><br />
 			<input type="submit" name="submit" value="Make Guess">
 		 </form>
+		 
+		 <p>${ warGame.player1.name }
 	</body>
 </html>

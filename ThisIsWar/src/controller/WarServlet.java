@@ -63,12 +63,13 @@ public class WarServlet extends HttpServlet {
 			warGame = new WarLogic();
 			warGame.start();
 			warGames.put( request.getSession().getId(), warGame );
+			request.getSession().putValue("warGame", warGame);
 		}
 		
 		//we have a request to play a turn
 		if( request.getParameter( "playTurn" ) != null){
-			
-			warGame.takeTurn();
+			if( !warGame.takeTurn() )
+				System.out.println("Game Over");
 		}
 		
 		

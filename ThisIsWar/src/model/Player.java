@@ -18,6 +18,7 @@ public class Player {
 		// TODO Auto-generated constructor stub
 		System.out.println("new player created");
 		this.winDeck = new Deck();
+		name = "unknown";
 	}
 
 	public Player(Deck drawDeck){
