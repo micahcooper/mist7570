@@ -31,8 +31,8 @@ public class Dealer {
 			deck2.addCard(deck.removeCard());
 		}
 		
-		player1.addDeck(deck1);
-		player2.addDeck(deck2);;
+		player1.addDrawDeck(deck1);
+		player2.addDrawDeck(deck2);;
 		
 	}
 }

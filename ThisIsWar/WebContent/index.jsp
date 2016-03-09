@@ -8,8 +8,8 @@
 		<h1>This is War</h1>
 		<p>something...</p>
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
-			<label id="guessLabel">Guess ${guesses.value}:</label>
-			<input type="text" name="guess" value=1 /><br />
+			<label id="guessLabel">Play turn:</label>
+			<input type="text" name="playTurn" value=1 /><br />
 			<input type="submit" name="submit" value="Make Guess">
 		 </form>
 	</body>

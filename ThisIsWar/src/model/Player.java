@@ -8,7 +8,8 @@ package model;
  *
  */
 public class Player {
-	private Deck deck;
+	private Deck drawDeck,winDeck;
+	private String name;
 
 	/**
 	 * 
@@ -16,23 +17,61 @@ public class Player {
 	public Player() {
 		// TODO Auto-generated constructor stub
 		System.out.println("new player created");
+		this.winDeck = new Deck();
 	}
 
-	public Player(Deck deck){
-		this.deck = deck;
+	public Player(Deck drawDeck){
+		this.drawDeck = drawDeck;
+		this.winDeck = new Deck();
 	}
 	
-	public void addDeck(Deck deck){
-		this.deck = deck;
+	public void addDrawDeck(Deck drawDeck){
+		this.drawDeck = drawDeck;
 		
-		System.out.println("Player: "+deck.toString()+" size:"+deck.getCardsLeft());
+		System.out.println("Player: "+drawDeck.toString()+" size:"+drawDeck.getCardsLeft());
 	}
 
-	public Deck getDeck() {
-		return deck;
+	/**
+	 * @return the drawDeck
+	 */
+	public Deck getDrawDeck() {
+		return drawDeck;
 	}
 
-	public void setDeck(Deck deck) {
-		this.deck = deck;
+	/**
+	 * @param drawDeck the drawDeck to set
+	 */
+	public void setDrawDeck(Deck drawDeck) {
+		this.drawDeck = drawDeck;
 	}
+
+	/**
+	 * @return the winDeck
+	 */
+	public Deck getWinDeck() {
+		return winDeck;
+	}
+
+	/**
+	 * @param winDeck the winDeck to set
+	 */
+	public void setWinDeck(Deck winDeck) {
+		this.winDeck = winDeck;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 }
