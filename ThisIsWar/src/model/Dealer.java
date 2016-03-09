@@ -13,22 +13,26 @@ public class Dealer {
 	public Dealer(){
 		
 		this.deck = new Deck();
-		deck.newDeck();
+		
 	}
 	
-	public void deal(){
+	public void deal(Player player1, Player player2){
 		Deck deck1,deck2;
 		deck1 = new Deck();
 		deck2 = new Deck();
 		
+		deck.newDeck();
 		deck.shuffleDeck();
+		
 		System.out.println(this.deck.toString());
 		
 		while( deck.getCardsLeft() > 0 ){
 			deck1.addCard(deck.removeCard());
 			deck2.addCard(deck.removeCard());
 		}
-		System.out.println("Player 1: "+deck1.toString()+" size:"+deck1.getCardsLeft());
-		System.out.println("Player 2: "+deck2.toString()+" size:"+deck2.getCardsLeft());
+		
+		player1.addDeck(deck1);
+		player2.addDeck(deck2);;
+		
 	}
 }

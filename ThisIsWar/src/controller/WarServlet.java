@@ -57,6 +57,7 @@ public class WarServlet extends HttpServlet {
 		GameLogic gameLogic = new GameLogic();
 		
 		gameLogic.start();
+		gameLogic.takeTurn();
 		
 		out.println("hi");
 		

@@ -4,7 +4,7 @@
 package model;
 
 /**
- * @author mrcooper
+ * @author micah cooper
  *
  */
 public class Player {
@@ -19,6 +19,20 @@ public class Player {
 	}
 
 	public Player(Deck deck){
+		this.deck = deck;
+	}
+	
+	public void addDeck(Deck deck){
+		this.deck = deck;
+		
+		System.out.println("Player: "+deck.toString()+" size:"+deck.getCardsLeft());
+	}
+
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public void setDeck(Deck deck) {
 		this.deck = deck;
 	}
 }
