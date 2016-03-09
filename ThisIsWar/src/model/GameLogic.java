@@ -6,7 +6,7 @@ package model;
 import java.io.Serializable;
 
 /**
- * @author mrcooper
+ * @author micah cooper
  *
  */
 public class GameLogic implements Serializable {
@@ -24,9 +24,11 @@ public class GameLogic implements Serializable {
 		// TODO Auto-generated constructor stub
 		System.out.println("create new game logic");
 		this.deck = new Deck();
+		deck.newDeck();
 	}
 	
 	public void deal(){
+		deck.shuffleDeck();
 		System.out.println(this.deck.toString());
 	}
 
