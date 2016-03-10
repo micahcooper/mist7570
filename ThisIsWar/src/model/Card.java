@@ -24,6 +24,11 @@ public class Card implements Serializable {
 		this.value = 1;
 		System.out.print("card created ");
 	}
+	
+	public Card(int value) {
+		//this.suit = "";
+		this.value = value;
+	}
 
 	/**
 	 * @param suit
@@ -109,7 +114,10 @@ public class Card implements Serializable {
 	 */
 	public String toString(){
 		String card = "";
-		card = "" + this.value+this.suit.charAt(0);
+		if( this.suit == null )
+			card = ""+this.value;
+		else
+			card = "" + this.value+this.suit.charAt(0);
 		return card;
 	}
 	

@@ -3,12 +3,15 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author micah cooper
  *
  */
-public class Dealer {
+public class Dealer implements Serializable{
 	private Deck deck;
+	private static final long serialVersionUID = 1L;
 
 	public Dealer(){
 		

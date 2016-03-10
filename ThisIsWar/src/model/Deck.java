@@ -132,6 +132,13 @@ public class Deck implements Serializable {
 	public Card getCard(int index){
 		return cards.get(index);
 	}
+	
+	public Card getTopCard(){
+		if( !cards.isEmpty() )
+			return cards.get(0);
+		
+		return new Card(999);
+	}
 
 	/**
 	 * @param index

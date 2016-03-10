@@ -1,0 +1,19 @@
+#controls {
+	border:1px solid black;
+	margin: 0 auto;
+	width:400px;
+}
+
+#gameBoard {
+	background-color: #277714;
+	border:1px solid black;
+	margin: 0 auto;
+	width:400px;
+}
+
+#header {
+	border:1px solid black;
+	margin: 0 auto;
+	text-align: center;
+	width:400px;
+}

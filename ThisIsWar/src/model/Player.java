@@ -3,11 +3,14 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author micah cooper
  *
  */
-public class Player {
+public class Player implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Deck drawDeck,winDeck;
 	private String name;
 
