@@ -18,21 +18,21 @@ public class Player implements Serializable {
 	 * 
 	 */
 	public Player() {
-		// TODO Auto-generated constructor stub
-		System.out.println("new player created");
 		this.winDeck = new Deck();
 		name = "unknown";
+		System.out.println(this.name+" player created");
 	}
-
-	public Player(Deck drawDeck){
-		this.drawDeck = drawDeck;
+	
+	public Player(String name) {
+		this.name = name;
+		System.out.print(this.name+" created with ");
 		this.winDeck = new Deck();
 	}
 	
 	public void addDrawDeck(Deck drawDeck){
 		this.drawDeck = drawDeck;
 		
-		System.out.println("Player: "+drawDeck.toString()+" size:"+drawDeck.getCardsLeft());
+		System.out.println(this.getName()+": "+drawDeck.toString()+" size:"+drawDeck.getCardsLeft());
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class Deck implements Serializable {
 	public Deck() {
 		this.cards = new ArrayList<Card>();
 		this.hasJokers = false;
-		System.out.println("deck created");
+		System.out.println("new deck..");
 	}
 	
 	/**
@@ -159,11 +159,11 @@ public class Deck implements Serializable {
 	}
 	
 	/**
-	 * @param index
-	 * removes a card at a given location of the deck
+	 * @param card
+	 * add a card
 	 */	
-	public void addCard(Card card){
-		cards.add(card);
+	public boolean addCard(Card card){
+		return cards.add(card);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class Deck implements Serializable {
 			Card c = new Card(suit, value);
 			this.cards.add(c);
 		
-			System.out.println(c.getCardString());
+			//System.out.println(c.getCardString());
 		}
 	}
 }

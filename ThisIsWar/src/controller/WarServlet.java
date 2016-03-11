@@ -63,6 +63,14 @@ public class WarServlet extends HttpServlet {
 			request.getSession().setAttribute("warGame", warGame);
 		}
 		
+		if( request.getParameter("test") != null ){
+			System.out.println(request.getParameter("test"));
+			warGame = new WarLogic();
+			warGame.test();
+			warGames.put( request.getSession().getId(), warGame );
+			request.getSession().setAttribute("warGame", warGame);
+		}
+		
 		//we have a new game
 		if( warGames.get( request.getSession().getId() ) == null )
 		{
@@ -76,8 +84,10 @@ public class WarServlet extends HttpServlet {
 		//we have a request to play a turn
 		if( request.getParameter( "playTurn" ) != null){
 			//check to see if we can play more another round, are there cards, if no, game over
-			if( !warGame.takeTurn() )
+			if( !warGame.takeTurn() ){
 				System.out.println("Game Over");
+				request.setAttribute("results", warGame);
+			}
 		}
 		
 		

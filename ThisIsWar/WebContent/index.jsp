@@ -10,6 +10,7 @@
 
 	<div id=header>
 		<h1>This is War</h1>
+		<p> ${ result.player1.winDeck.cardsLeft > result.player2.winDeck.cardsleft ? 'player 1 wins':'player 2 wins' }</p>
 	</div>
 	
 	<div id=gameBoard>
@@ -27,9 +28,10 @@
 	
 	<div id=controls>
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
-			<label id="guessLabel">Play turn:</label>
+			<label id="guessLabel">OPTIONS: </label>
 			<input type="submit" name="playTurn" value="Play a turn">
 			<input type="submit" name="reset" value="RESET">
+			<input type="submit" name="test" value="Stack Deck and Test">
 		</form>
 	</div>
 	
