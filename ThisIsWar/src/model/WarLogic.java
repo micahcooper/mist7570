@@ -30,45 +30,71 @@ public class WarLogic implements Serializable {
 	}
 	
 	public boolean takeTurn(){
+		//check to see if there are any cards left
 		if( player1.getDrawDeck().getCardsLeft() > 0 ){
-			
+			//player1 wins
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
 				player1.getWinDeck().addCard(player2.getDrawDeck().removeCard(0));
 				player1.getWinDeck().addCard(player1.getDrawDeck().removeCard(0));
 				System.out.println( "Player one wins, deck size:"+player1.getDrawDeck().getCardsLeft() );
 			}
+			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
 				player2.getWinDeck().addCard(player1.getDrawDeck().removeCard(0));
 				player2.getWinDeck().addCard(player2.getDrawDeck().removeCard(0));
 				System.out.println("Player two wins, deck size:"+player2.getDrawDeck().getCardsLeft() );
 			}
+			//it's a tie, time for war
 			else{
-				//System.out.println("we have a war");
-				int multiplesOfThree;
-				
-				if( player1.getDrawDeck().getCardsLeft() >= player2.getDrawDeck().getCardsLeft())
-					multiplesOfThree = player2.getDrawDeck().getCardsLeft() % 3;
-				else
-					multiplesOfThree = player1.getDrawDeck().getCardsLeft() % 3;
-				
-				for(int i=0; i <= multiplesOfThree; i++){
-					if( player1.getDrawDeck().getCard(4+4*i).getValue() > player2.getDrawDeck().getCard(4+4*i).getValue() ){
-						System.out.println("Player one wins the war");
-						i=multiplesOfThree+1;
-					}
-					else if( player1.getDrawDeck().getCard(4+4*i).getValue() < player2.getDrawDeck().getCard(4+4*i).getValue() ){
-						System.out.println("Player two wins the war");
-						i=multiplesOfThree+1;
-					}
-					else{
-						System.out.println("its another war");
-					}
-				}
+				war();
 			}
 			
 			return true;
 		}
 		return false;
+	}
+	
+	private void war(){
+		int totalSpoils;
+		System.out.println("Player: "+player1.getDrawDeck().toString()+" size:"+player1.getDrawDeck().getCardsLeft());
+		System.out.println("Player: "+player2.getDrawDeck().toString()+" size:"+player2.getDrawDeck().getCardsLeft());
+		//check to see who has the least amount of cards, calculate the spoils
+		if( player1.getDrawDeck().getCardsLeft() <= player2.getDrawDeck().getCardsLeft())
+			if( player1.getDrawDeck().getCardsLeft() >= 4 )
+				totalSpoils = 3;
+			else
+				totalSpoils = player1.getDrawDeck().getCardsLeft();
+		else
+			if( player2.getDrawDeck().getCardsLeft() >= 4 )
+				totalSpoils = 3;
+			else
+				totalSpoils = player2.getDrawDeck().getCardsLeft();
+		
+		
+		//now we know how many cards to play in war
+		dealer.addToSpoilsOfWar(player1, player2, totalSpoils);
+		
+		//player1 wins the war
+		if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
+			System.out.println("Player one wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
+			dealer.toTheVictorGoesTheSpoils(player1);
+			player1.getWinDeck().addCard( player2.getDrawDeck().removeCard(0) );
+		}
+		//player2 wins the war
+		else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
+			System.out.println("Player two wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
+			dealer.toTheVictorGoesTheSpoils(player2);
+			player2.getWinDeck().addCard( player1.getDrawDeck().removeCard(0) );
+		}
+		
+		else{
+			System.out.println("its another war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
+			dealer.addToSpoilsOfWar( player1.getDrawDeck().removeCard(0) );
+			dealer.addToSpoilsOfWar( player2.getDrawDeck().removeCard(0) );
+			//we need to wait for the user to press the button, so it can't be truly recursive
+			//war();
+		}
+		
 	}
 
 	/**

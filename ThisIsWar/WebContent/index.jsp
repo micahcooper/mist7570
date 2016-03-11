@@ -29,6 +29,7 @@
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
 			<label id="guessLabel">Play turn:</label>
 			<input type="submit" name="playTurn" value="Play a turn">
+			<input type="submit" name="reset" value="RESET">
 		</form>
 	</div>
 	

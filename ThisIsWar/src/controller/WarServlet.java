@@ -54,20 +54,28 @@ public class WarServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/index.jsp";
-		PrintWriter out = response.getWriter();
-		//GameLogic gameLogic = new GameLogic();
+		
+		if( request.getParameter("reset") != null ){
+			System.out.println(request.getParameter("reset"));
+			warGame = new WarLogic();
+			warGame.start();
+			warGames.put( request.getSession().getId(), warGame );
+			request.getSession().setAttribute("warGame", warGame);
+		}
 		
 		//we have a new game
 		if( warGames.get( request.getSession().getId() ) == null )
 		{
+			System.out.println("start new game in warServlet");
 			warGame = new WarLogic();
 			warGame.start();
 			warGames.put( request.getSession().getId(), warGame );
-			request.getSession().putValue("warGame", warGame);
+			request.getSession().setAttribute("warGame", warGame);
 		}
 		
 		//we have a request to play a turn
 		if( request.getParameter( "playTurn" ) != null){
+			//check to see if we can play more another round, are there cards, if no, game over
 			if( !warGame.takeTurn() )
 				System.out.println("Game Over");
 		}
