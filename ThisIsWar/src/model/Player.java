@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Deck drawDeck,winDeck;
+	private Deck drawDeck,winDeck,memoryDeck;
 	private String name;
 
 	/**
@@ -27,8 +27,23 @@ public class Player implements Serializable {
 		this.name = name;
 		System.out.print(this.name+" created with ");
 		this.winDeck = new Deck();
+		this.memoryDeck = new Deck();
 	}
 	
+	/**
+	 * @return the memoryDeck
+	 */
+	public Deck getMemoryDeck() {
+		return memoryDeck;
+	}
+
+	/**
+	 * @param memoryDeck the memoryDeck to set
+	 */
+	public void setMemoryDeck(Deck memoryDeck) {
+		this.memoryDeck = memoryDeck;
+	}
+
 	public void addDrawDeck(Deck drawDeck){
 		this.drawDeck = drawDeck;
 		

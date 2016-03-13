@@ -22,32 +22,43 @@ public class WarLogic implements Serializable {
 		System.out.println("create new war game logic");
 		dealer = new Dealer();
 		player1 = new Player("john");
-		player2 = new Player("sue");
+		player2 = new Player("sara");
 	}
 	
 	public void start(){
 		dealer.deal(player1, player2);
+		dealer.setShowCard(true);
 	}
 	
 	public void test(){
 		dealer.test(player1, player2);
+		dealer.setShowCard(true);
 	}
 	
 	public boolean takeTurn(){
 		System.out.println("\n ============ NEW ROUND ============= \n");
 		//check to see if there are any cards left
 		if( player1.getDrawDeck().getCardsLeft() > 0 ){
+			
+			player1.getMemoryDeck().addCard(player1.getDrawDeck().getCard(0));
+			player2.getMemoryDeck().addCard(player2.getDrawDeck().getCard(0));
+			System.out.println("memory card deck size "+player1.getMemoryDeck());
+			
 			//player1 wins
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
+				dealer.setTimeOfWar(false);
 				player1.getWinDeck().addCard(player2.getDrawDeck().removeCard(0));
 				player1.getWinDeck().addCard(player1.getDrawDeck().removeCard(0));
-				System.out.println( player1.getName()+" wins, deck size:"+player1.getDrawDeck().getCardsLeft() );
+				
+				System.out.println( player1.getName()+" wins "+player1.getWinDeck().getLastCard()+", deck size:"+player1.getDrawDeck().getCardsLeft() );
 			}
 			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
+				dealer.setTimeOfWar(false);
 				player2.getWinDeck().addCard(player1.getDrawDeck().removeCard(0));
 				player2.getWinDeck().addCard(player2.getDrawDeck().removeCard(0));
-				System.out.println( player2.getName()+" wins, deck size:"+player2.getDrawDeck().getCardsLeft() );
+				
+				System.out.println( player2.getName()+" wins with "+player2.getWinDeck().getLastCard()+", deck size:"+player2.getDrawDeck().getCardsLeft() );
 			}
 			//it's a tie, time for war
 			else{
@@ -62,7 +73,8 @@ public class WarLogic implements Serializable {
 	
 	private boolean war(){
 		int totalSpoils;
-				
+		
+		dealer.setTimeOfWar(true);
 		//check to see who has the least amount of cards, then calculate the cards available for the spoils of war
 		if( player1.getDrawDeck().getCardsLeft() <= player2.getDrawDeck().getCardsLeft())
 			if( player1.getDrawDeck().getCardsLeft() > 4 )
@@ -80,7 +92,7 @@ public class WarLogic implements Serializable {
 		dealer.addToSpoilsOfWar( player1.getDrawDeck().removeCard(0) );
 		dealer.addToSpoilsOfWar( player2.getDrawDeck().removeCard(0) );
 		dealer.addToSpoilsOfWar(player1, player2, totalSpoils);
-		System.out.println("spoils size: "+totalSpoils);
+		System.out.println("cards per player for spoils size: "+totalSpoils);
 		System.out.println( player1.getName()+": "+player1.getDrawDeck().toString()+" size:"+player1.getDrawDeck().getCardsLeft() );
 		System.out.println( player2.getName()+": "+player2.getDrawDeck().toString()+" size:"+player2.getDrawDeck().getCardsLeft() );
 		
@@ -88,13 +100,13 @@ public class WarLogic implements Serializable {
 		if( totalSpoils > 0 ){
 			//player1 wins the war
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
-				System.out.println("Player one wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
+				System.out.println(player1.getName()+" wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
 				dealer.toTheVictorGoesTheSpoils(player1);
 				player1.getWinDeck().addCard( player2.getDrawDeck().removeCard(0) );
 			}
 			//player2 wins the war
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
-				System.out.println("Player two wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
+				System.out.println(player2.getName()+" wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
 				dealer.toTheVictorGoesTheSpoils(player2);
 				player2.getWinDeck().addCard( player1.getDrawDeck().removeCard(0) );
 			}
@@ -138,6 +150,20 @@ public class WarLogic implements Serializable {
 	 */
 	public void setPlayer2(Player player2) {
 		this.player2 = player2;
+	}
+	
+	/**
+	 * @return the dealer
+	 */
+	public Dealer getDealer() {
+		return dealer;
+	}
+
+	/**
+	 * @param dealer the dealer to set
+	 */
+	public void setDealer(Dealer dealer) {
+		this.dealer = dealer;
 	}
 
 }
