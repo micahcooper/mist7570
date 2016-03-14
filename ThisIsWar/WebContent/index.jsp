@@ -34,6 +34,7 @@
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
 			${ warGame.dealer.showCard  ? "" : "<input type='submit' name='draw' value='Draw and Start Game'>" }
 			${ warGame.dealer.showCard  ? "<input type='submit' name='draw' value='Draw'>" : "" }
+			${ warGame.dealer.timeOfWar  ? "<input type='submit' name='goToWar' value='Show War Card'>" : "" }
 			<input type="submit" name="test" value="Stack Deck and Test">
 			<input type="submit" name="reset" value="RESET">
 		</form>

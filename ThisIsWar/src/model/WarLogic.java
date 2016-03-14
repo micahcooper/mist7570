@@ -62,8 +62,9 @@ public class WarLogic implements Serializable {
 			}
 			//it's a tie, time for war
 			else{
-				System.out.println("Gentlemen, we have ourselves a war");
-				war();
+				//System.out.println("Gentlemen, we have ourselves a war");
+				//war();
+				dealer.setTimeOfWar(true);
 			}
 			
 			return true;
@@ -74,7 +75,6 @@ public class WarLogic implements Serializable {
 	private boolean war(){
 		int totalSpoils;
 		
-		dealer.setTimeOfWar(true);
 		//check to see who has the least amount of cards, then calculate the cards available for the spoils of war
 		if( player1.getDrawDeck().getCardsLeft() <= player2.getDrawDeck().getCardsLeft())
 			if( player1.getDrawDeck().getCardsLeft() > 4 )

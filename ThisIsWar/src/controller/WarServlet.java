@@ -54,20 +54,20 @@ public class WarServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/index.jsp";
 		
+		//reset and re-deal the decks
 		if( request.getParameter("reset") != null ){
 			System.out.println(request.getParameter("reset"));
 			warGame = new WarLogic();
 			warGame.start();
 			warGames.put( request.getSession().getId(), warGame );
-			//request.getSession().setAttribute("warGame", warGame);
 		}
 		
+		//button to stack the decks and give identical ones to each player
 		if( request.getParameter("test") != null ){
 			System.out.println(request.getParameter("test"));
 			warGame = new WarLogic();
 			warGame.test();
 			warGames.put( request.getSession().getId(), warGame );
-			//request.getSession().setAttribute("warGame", warGame);
 		}
 		
 		//we have a request to start a new game
@@ -85,9 +85,17 @@ public class WarServlet extends HttpServlet {
 			if( !warGame.takeTurn() ){
 				System.out.println("Game Over");
 			}
-			
-			//warGame.getDealer().setShowCard(true);
-			//System.out.println( warGame.getDealer().checkForWar(warGame.getPlayer1(), warGame.getPlayer2()) );
+		}
+		
+		//we have a request to turn the card
+		if( request.getParameter( "turnCard" ) != null){
+			System.out.println("Request to show next card");
+			gameMemory = warGame;
+			//check to see if we can play more another round, are there cards, if no, game over
+			if( !warGame.takeTurn() ){
+				System.out.println("Game Over");
+				request.setAttribute("results", warGame);
+			}
 		}
 		
 		//we have a request to turn the card
