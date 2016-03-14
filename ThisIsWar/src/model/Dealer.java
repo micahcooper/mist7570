@@ -41,6 +41,7 @@ public class Dealer implements Serializable{
 	 * @param timeOfWar the timeOfWar to set
 	 */
 	public void setTimeOfWar(boolean timeOfWar) {
+		//if( timeOfWar ) {System.out.println("Gentlemen, we have ourselves a war");}
 		this.timeOfWar = timeOfWar;
 	}
 
@@ -123,18 +124,6 @@ public class Dealer implements Serializable{
 		
 		spoilsOfWar.addCard(card);
 		System.out.println( "spoils of war size: "+spoilsOfWar.getCardsLeft() );//+" with: "+spoilsOfWar.toString() );
-	}
-	
-	public boolean checkForWar(Player player1, Player player2){
-		if( player1.getDrawDeck().getCardsLeft() > 0 ){
-			if( player1.getDrawDeck().getTopCard().getValue() == player2.getDrawDeck().getTopCard().getValue() ){
-				System.out.println( "war flag set to true" );
-				this.timeOfWar = true;
-				return true;
-			}
-		}
-		this.timeOfWar = false;
-		return false;
 	}
 	
 	public void toTheVictorGoesTheSpoils(Player player){

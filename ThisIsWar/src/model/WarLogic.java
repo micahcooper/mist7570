@@ -46,7 +46,6 @@ public class WarLogic implements Serializable {
 			
 			//player1 wins
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
-				dealer.setTimeOfWar(false);
 				player1.getWinDeck().addCard(player2.getDrawDeck().removeCard(0));
 				player1.getWinDeck().addCard(player1.getDrawDeck().removeCard(0));
 				
@@ -54,7 +53,6 @@ public class WarLogic implements Serializable {
 			}
 			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
-				dealer.setTimeOfWar(false);
 				player2.getWinDeck().addCard(player1.getDrawDeck().removeCard(0));
 				player2.getWinDeck().addCard(player2.getDrawDeck().removeCard(0));
 				
@@ -62,8 +60,6 @@ public class WarLogic implements Serializable {
 			}
 			//it's a tie, time for war
 			else{
-				//System.out.println("Gentlemen, we have ourselves a war");
-				//war();
 				dealer.setTimeOfWar(true);
 			}
 			
@@ -72,7 +68,7 @@ public class WarLogic implements Serializable {
 		return false;
 	}
 	
-	private boolean war(){
+	public boolean war(){
 		int totalSpoils;
 		
 		//check to see who has the least amount of cards, then calculate the cards available for the spoils of war
@@ -100,21 +96,19 @@ public class WarLogic implements Serializable {
 		if( totalSpoils > 0 ){
 			//player1 wins the war
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
+				//dealer.setTimeOfWar(false);
 				System.out.println(player1.getName()+" wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
 				dealer.toTheVictorGoesTheSpoils(player1);
 				player1.getWinDeck().addCard( player2.getDrawDeck().removeCard(0) );
+				return false;
 			}
 			//player2 wins the war
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
+				//dealer.setTimeOfWar(false);
 				System.out.println(player2.getName()+" wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
 				dealer.toTheVictorGoesTheSpoils(player2);
 				player2.getWinDeck().addCard( player1.getDrawDeck().removeCard(0) );
-			}
-			
-			else{
-				System.out.println("a war within a war, just like inception, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
-				//we need to wait for the user to press the button, so it can't be recursive
-				//war();
+				return false;
 			}
 			
 			return true;
