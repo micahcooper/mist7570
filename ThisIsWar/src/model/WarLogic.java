@@ -110,6 +110,8 @@ public class WarLogic implements Serializable {
 				player2.getWinDeck().addCard( player1.getDrawDeck().removeCard(0) );
 				return false;
 			}
+			else
+				dealer.setSpoilsOfWarWithoutLoopingInJSPCheat();
 			
 			return true;
 		}

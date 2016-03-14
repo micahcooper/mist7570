@@ -70,7 +70,7 @@ public class Dealer implements Serializable{
 		return spoilsOfWarWithoutLoopingInJSPCheat;
 	}
 	
-	private ArrayList<String> setSpoilsOfWarWithoutLoopingInJSPCheat() {
+	protected ArrayList<String> setSpoilsOfWarWithoutLoopingInJSPCheat() {
 		this.spoilsOfWarWithoutLoopingInJSPCheat = new ArrayList<String>();
 		
 		System.out.print("cheat: ");
