@@ -28,6 +28,8 @@
 			Score: ${ warGame.player2.winDeck.cardsLeft }
 			${ showWarCard ? "<img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' />" :  ""}<img src='classic-cards/${ showWarCard ?  warGame.player2.drawDeck.topCard : "blank" }.png' />
 		</div>
+	</div>
+	<div id=spoilsOfWar>
 		<p style='max-width:400px'>${ showWarCard ? "Hidden cards to be captured: " : "" }${ warGame.dealer.spoilsOfWar }</p>
 	</div>
 	

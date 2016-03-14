@@ -82,6 +82,7 @@ public class WarServlet extends HttpServlet {
 			
 			if( !warGame.takeTurn() ){
 				System.out.println("Game Over");
+				
 			}
 		}
 		
@@ -89,14 +90,15 @@ public class WarServlet extends HttpServlet {
 		if( request.getParameter( "goToWar" ) != null){
 			System.out.println("Request to show war card");
 			//check to see if we can play more another round, are there cards, if no, game over
-			if( !warGame.war() ){
-				System.out.println("No longer in a war");
-				warGame.getDealer().setTimeOfWar(false);
-			}
 			if( warGame.getDealer().isTimeOfWar() ){
 				System.out.println("Gentlemen, we have ourselves a war");
 				request.setAttribute("showWarCard", true);
 			}
+			if( !warGame.war() ){
+				System.out.println("No longer in a war");
+				warGame.getDealer().setTimeOfWar(false);
+			}
+			
 		}
 		
 		request.getSession().setAttribute("warGame", warGame);
