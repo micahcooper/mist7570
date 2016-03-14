@@ -8,9 +8,8 @@
 	<title>This Is War, Peacock</title>		
 </head>
 <body>
-
+<div id=container>
 	<div id=header>
-	${ goToWar }
 		<h1>This is War</h1>
 		<p> ${ warGame.dealer.showCard && warGame.player1.memoryDeck.lastCard.value > warGame.player2.memoryDeck.lastCard.value ? 'player 1 wins': "" }</p>
 		<p> ${ warGame.dealer.showCard && warGame.player1.memoryDeck.lastCard.value < warGame.player2.memoryDeck.lastCard.value ? 'player 2 wins': "" }</p>
@@ -18,21 +17,25 @@
 	</div>
 	
 	<div id=gameBoard>
-		<div class=card>
-			Player 1: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' />
-			Score: ${ warGame.player1.winDeck.cardsLeft }
-			${ showWarCard ? "<img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' />" :  ""}<img src='classic-cards/${ showWarCard ?  warGame.player1.drawDeck.topCard : "blank" }.png' />
+		<div id=cards>
+			<div class=card>
+				Player 1: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' />
+				Score: ${ warGame.player1.winDeck.cardsLeft }
+				${ showWarCard ? "<img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' />" :  ""}<img src='classic-cards/${ showWarCard ?  warGame.player1.drawDeck.topCard : "blank" }.png' />
+			</div>
+			<div class=card>
+				Player 2: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999" }.png' />
+				Score: ${ warGame.player2.winDeck.cardsLeft }
+				${ showWarCard ? "<img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' />" :  ""}<img src='classic-cards/${ showWarCard ?  warGame.player2.drawDeck.topCard : "blank" }.png' />
+			</div>
 		</div>
-		<div class=card>
-			Player 2: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999" }.png' />
-			Score: ${ warGame.player2.winDeck.cardsLeft }
-			${ showWarCard ? "<img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' /><img src='classic-cards/b1pl.png' />" :  ""}<img src='classic-cards/${ showWarCard ?  warGame.player2.drawDeck.topCard : "blank" }.png' />
+		<div id=spoilsOfWar>
+			<p>${ showWarCard ? "Cards to be captured: " : "" }</p>
+			<p>${ showWarCard ? warGame.dealer.spoilsOfWarWithoutLoopingInJSPCheat : "" }</p>
 		</div>
-	</div>
-	<div id=spoilsOfWar>
-		<p style='max-width:400px'>${ showWarCard ? "Hidden cards to be captured: " : "" }${ warGame.dealer.spoilsOfWar }</p>
 	</div>
 	
+	<div class=break></div>
 	<div id=controls>
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
 			${ warGame.dealer.showCard  ? "" : "<input type='submit' name='draw' value='Draw and Start Game'>" }
@@ -42,6 +45,6 @@
 			<input type="submit" name="reset" value="RESET">
 		</form>
 	</div>
-	
+</div>	
 </body>
 </html>

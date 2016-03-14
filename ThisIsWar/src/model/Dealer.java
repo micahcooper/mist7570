@@ -4,6 +4,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @author micah cooper
@@ -13,6 +14,8 @@ public class Dealer implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Deck gameDeck, spoilsOfWar;
 	private boolean showCard, timeOfWar;
+	ArrayList<String> spoilsOfWarWithoutLoopingInJSPCheat;
+
 
 
 
@@ -58,6 +61,25 @@ public class Dealer implements Serializable{
 	 */
 	public Deck getSpoilsOfWar() {
 		return spoilsOfWar;
+	}
+	
+	/**
+	 * @return the spoilsOfWar
+	 */
+	public ArrayList<String> getSpoilsOfWarWithoutLoopingInJSPCheat() {
+		return spoilsOfWarWithoutLoopingInJSPCheat;
+	}
+	
+	private ArrayList<String> setSpoilsOfWarWithoutLoopingInJSPCheat() {
+		this.spoilsOfWarWithoutLoopingInJSPCheat = new ArrayList<String>();
+		
+		System.out.print("cheat: ");
+		System.out.println(this.spoilsOfWar.getCardsLeft());
+		for( int i=0; i<this.spoilsOfWar.getCardsLeft(); i++){
+			spoilsOfWarWithoutLoopingInJSPCheat.add("<img src='classic-cards/"+this.spoilsOfWar.getCard(i).toString()+".png' />");
+		}
+		
+		return spoilsOfWarWithoutLoopingInJSPCheat;
 	}
 
 	/**
@@ -127,6 +149,7 @@ public class Dealer implements Serializable{
 	}
 	
 	public void toTheVictorGoesTheSpoils(Player player){
+		setSpoilsOfWarWithoutLoopingInJSPCheat();
 		while( spoilsOfWar.getCardsLeft() > 0 )
 			player.getWinDeck().addCard( spoilsOfWar.removeCard() );
 	}
