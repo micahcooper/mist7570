@@ -18,7 +18,6 @@ public class WarLogic implements Serializable {
 	 * 
 	 */
 	public WarLogic() {
-		// TODO Auto-generated constructor stub
 		System.out.println("create new war game logic");
 		dealer = new Dealer();
 		player1 = new Player("john");
@@ -85,8 +84,8 @@ public class WarLogic implements Serializable {
 		
 		
 		//now we know how many cards to use in war
-		dealer.addToSpoilsOfWar( player1.getDrawDeck().removeCard(0) );
-		dealer.addToSpoilsOfWar( player2.getDrawDeck().removeCard(0) );
+		dealer.addToSpoilsOfWar( player1, player1.getDrawDeck().removeCard(0) );
+		dealer.addToSpoilsOfWar( player2, player2.getDrawDeck().removeCard(0) );
 		dealer.addToSpoilsOfWar(player1, player2, totalSpoils);
 		System.out.println("cards per player for spoils size: "+totalSpoils);
 		System.out.println( player1.getName()+": "+player1.getDrawDeck().toString()+" size:"+player1.getDrawDeck().getCardsLeft() );
@@ -98,7 +97,7 @@ public class WarLogic implements Serializable {
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
 				//dealer.setTimeOfWar(false);
 				System.out.println(player1.getName()+" wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
-				dealer.toTheVictorGoesTheSpoils(player1);
+				dealer.toTheVictorGoesTheSpoils(player1, player2.getWarDeck());
 				player1.getWinDeck().addCard( player2.getDrawDeck().removeCard(0) );
 				return false;
 			}
@@ -106,12 +105,14 @@ public class WarLogic implements Serializable {
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
 				//dealer.setTimeOfWar(false);
 				System.out.println(player2.getName()+" wins the war, p1:"+player1.getDrawDeck().getCard(0).getValue()+" p2:"+player2.getDrawDeck().getCard(0).getValue());
-				dealer.toTheVictorGoesTheSpoils(player2);
+				dealer.toTheVictorGoesTheSpoils(player2, player1.getWarDeck());
 				player2.getWinDeck().addCard( player1.getDrawDeck().removeCard(0) );
 				return false;
 			}
-			else
-				dealer.setSpoilsOfWarWithoutLoopingInJSPCheat();
+			else{
+				dealer.toTheVictorGoesTheSpoils(player1, player1.getWarDeck());
+				dealer.toTheVictorGoesTheSpoils(player2, player2.getWarDeck());
+			}
 			
 			return true;
 		}

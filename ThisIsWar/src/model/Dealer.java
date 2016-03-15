@@ -4,7 +4,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * @author micah cooper
@@ -12,12 +11,8 @@ import java.util.ArrayList;
  */
 public class Dealer implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private Deck gameDeck, spoilsOfWar;
+	private Deck gameDeck;
 	private boolean showCard, timeOfWar;
-	ArrayList<String> spoilsOfWarWithoutLoopingInJSPCheat;
-
-
-
 
 	/**
 	 * @return the showCard
@@ -56,39 +51,6 @@ public class Dealer implements Serializable{
 		this.gameDeck = new Deck();
 	}
 	
-	/**
-	 * @return the spoilsOfWar
-	 */
-	public Deck getSpoilsOfWar() {
-		return spoilsOfWar;
-	}
-	
-	/**
-	 * @return the spoilsOfWar
-	 */
-	public ArrayList<String> getSpoilsOfWarWithoutLoopingInJSPCheat() {
-		return spoilsOfWarWithoutLoopingInJSPCheat;
-	}
-	
-	protected ArrayList<String> setSpoilsOfWarWithoutLoopingInJSPCheat() {
-		this.spoilsOfWarWithoutLoopingInJSPCheat = new ArrayList<String>();
-		
-		System.out.print("cheat: ");
-		System.out.println(this.spoilsOfWar.getCardsLeft());
-		for( int i=0; i<this.spoilsOfWar.getCardsLeft(); i++){
-			spoilsOfWarWithoutLoopingInJSPCheat.add("<img src='classic-cards/"+this.spoilsOfWar.getCard(i).toString()+".png' />");
-		}
-		
-		return spoilsOfWarWithoutLoopingInJSPCheat;
-	}
-
-	/**
-	 * @param spoilsOfWar the spoilsOfWar to set
-	 */
-	public void setSpoilsOfWar(Deck spoilsOfWar) {
-		this.spoilsOfWar = spoilsOfWar;
-	}
-
 	public void deal(Player player1, Player player2){
 		Deck deck1,deck2;
 		deck1 = new Deck();
@@ -124,33 +86,19 @@ public class Dealer implements Serializable{
 	}
 	
 	public void addToSpoilsOfWar(Player player1, Player player2, int totalSpoils){
-		if(spoilsOfWar == null){
-			System.out.print("spoils of war created with ");
-			spoilsOfWar =  new Deck();
-		}
-		
-		//indexed at 1 because 0 is being used in the war
 		for(int i=0; i<totalSpoils; i++){
-			spoilsOfWar.addCard( player1.getDrawDeck().removeCard(0) );
-			spoilsOfWar.addCard( player2.getDrawDeck().removeCard(0) );
-			
+			player1.getWarDeck().addCard( player1.getDrawDeck().removeCard(0) );
+			player2.getWarDeck().addCard( player2.getDrawDeck().removeCard(0) );
 		}
-		System.out.println( "spoils of war size: "+spoilsOfWar.getCardsLeft() );//+" with: "+spoilsOfWar.toString() );
 	}
 	
-	public void addToSpoilsOfWar(Card card){
-		if(spoilsOfWar == null){
-			System.out.print("spoils of war created with ");
-			spoilsOfWar =  new Deck();
-		}
-		
-		spoilsOfWar.addCard(card);
-		System.out.println( "spoils of war size: "+spoilsOfWar.getCardsLeft() );//+" with: "+spoilsOfWar.toString() );
+	public void addToSpoilsOfWar(Player player, Card card){
+		player.resetWarDeck();
+		player.getWarDeck().addCard(card);
 	}
 	
-	public void toTheVictorGoesTheSpoils(Player player){
-		setSpoilsOfWarWithoutLoopingInJSPCheat();
-		while( spoilsOfWar.getCardsLeft() > 0 )
-			player.getWinDeck().addCard( spoilsOfWar.removeCard() );
+	public void toTheVictorGoesTheSpoils(Player player, Deck spoilsOfWar){
+		for( int i=0; i < spoilsOfWar.getCardsLeft(); i++)
+			player.getWinDeck().addCard( spoilsOfWar.getCard(i) );
 	}
 }

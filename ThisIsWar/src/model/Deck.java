@@ -28,6 +28,20 @@ public class Deck implements Serializable {
 	}
 	
 	/**
+	 * @return the cards
+	 */
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+
+	/**
+	 * @param cards the cards to set
+	 */
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
+
+	/**
 	 * @param cards
 	 * @param hasJokers
 	 * 
