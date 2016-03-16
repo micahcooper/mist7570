@@ -72,9 +72,18 @@ public class Dealer implements Serializable{
 		}
 	}
 	
-	public void toTheVictorGoesTheSpoils(Player player, Deck spoilsOfWar){
-		for( int i=0; i < spoilsOfWar.getCardsLeft(); i++)
-			player.getWinDeck().addCard( spoilsOfWar.getCard(i) );
+	public void toTheVictorGoesTheSpoils(Player winner, Player loser){
+		for( int i=0; i < loser.getWarDeck().getCardsLeft(); i++){
+			winner.getWinDeck().addCard( loser.getWarDeck().getCard(i) );
+			winner.getWinDeck().addCard( winner.getWarDeck().getCard(i) );
+		}
+	}
+	
+	public void keepWarDeck(Player player1, Player player2){
+		for( int i=0; i < player1.getWarDeck().getCardsLeft(); i++){
+			player1.getWinDeck().addCard( player1.getWarDeck().getCard(i) );
+			player2.getWinDeck().addCard( player2.getWarDeck().getCard(i) );
+		}
 	}
 	
 	public void takeCard(Player winner, Player loser){

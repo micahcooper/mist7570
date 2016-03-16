@@ -68,20 +68,15 @@ public class WarLogic implements Serializable {
 		if( totalSpoils > 0 ){
 			//player1 wins the war
 			if( player1.getWarDeck().getLastCard().getValue() > player2.getWarDeck().getLastCard().getValue() ){
-				System.out.println(player1.getName()+" wins the war, p1:"+player1.getWarDeck().getLastCard().getValue()+" p2:"+player2.getWarDeck().getLastCard().getValue());
-				
-				dealer.toTheVictorGoesTheSpoils(player1, player2.getWarDeck());
+				dealer.toTheVictorGoesTheSpoils(player1, player2);
 			}
 			//player2 wins the war
 			else if( player1.getWarDeck().getLastCard().getValue() < player2.getWarDeck().getLastCard().getValue() ){
-				System.out.println(player2.getName()+" wins the war, p1:"+player1.getWarDeck().getLastCard().getValue()+" p2:"+player2.getWarDeck().getLastCard().getValue());
-				
-				dealer.toTheVictorGoesTheSpoils(player2, player1.getWarDeck());
+				dealer.toTheVictorGoesTheSpoils(player2, player1);
 			}
 			//tie, players get to keep their cards
 			else{
-				dealer.toTheVictorGoesTheSpoils(player1, player1.getWarDeck());
-				dealer.toTheVictorGoesTheSpoils(player2, player2.getWarDeck());
+				dealer.keepWarDeck(player1, player2);
 			}
 		}
 		//since we're only doing one war round, just return false for continue another war round
