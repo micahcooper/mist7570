@@ -12,24 +12,6 @@ import java.io.Serializable;
 public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Deck drawDeck,winDeck,memoryDeck,warDeck;
-	/**
-	 * @return the warDeck
-	 */
-	public Deck getWarDeck() {
-		return warDeck;
-	}
-
-	/**
-	 * @param warDeck the warDeck to set
-	 */
-	public void setWarDeck(Deck warDeck) {
-		this.warDeck = warDeck;
-	}
-	
-	public void resetWarDeck(){
-		this.warDeck = new Deck();
-	}
-
 	private String name;
 
 	/**
@@ -109,6 +91,24 @@ public class Player implements Serializable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * @return the warDeck
+	 */
+	public Deck getWarDeck() {
+		return warDeck;
+	}
+
+	/**
+	 * @param warDeck the warDeck to set
+	 */
+	public void setWarDeck(Deck warDeck) {
+		this.warDeck = warDeck;
+	}
+	
+	public void resetWarDeck(){
+		this.warDeck = new Deck();
 	}
 
 	

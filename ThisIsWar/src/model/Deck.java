@@ -240,4 +240,39 @@ public class Deck implements Serializable {
 			//System.out.println(c.getCardString());
 		}
 	}
+	
+	/**
+	 * sets the deck to a predetermined order - useful for testing
+	 */	
+	public void stackDeckAlternate(){
+		this.cards = new ArrayList<Card>();
+		int value = 0;
+		String suit = "";
+		String deckString = "12S,4D,11S,1S,2C,4D,5D,10D,7S,6C,8S,10D,11D,7C,13S,13H,1C,8D,7H,11H,2C,9H,9S,9C,6S,2H,6D,2S,5C,3H,10C,5H,7D,4C,2D,10H,8C,13C,1D,12C,11S,4H,12H,6H,1H,8H,4D,4S,11C,5S,3S,13D,";
+		String[] cards = deckString.split(",");
+		// 
+		for (int i=0; i<cards.length; i++){
+			// get suit off of each card string in the array
+			int l = cards[i].length();
+			char s = cards[i].charAt(l-1);
+			if (s == 'H'){
+				suit="Heart";
+			}
+			if (s == 'S'){
+				suit="Spade";
+			}
+			if (s == 'D'){
+				suit="Diamond";
+			}
+			if (s == 'C'){
+				suit="Club";
+			}
+			value = Integer.parseInt(cards[i].substring(0, l-1));
+			
+			Card c = new Card(suit, value);
+			this.cards.add(c);
+		
+			//System.out.println(c.getCardString());
+		}
+	}
 }

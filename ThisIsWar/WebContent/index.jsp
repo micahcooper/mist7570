@@ -24,7 +24,7 @@
 				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[1] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[2] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[3] : "blank" }.png' />
-				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.drawDeck.topCard : "blank" }.png' />
+				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.lastCard : "blank" }.png' />
 			</div>
 			<div class=card>
 				Player 2: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999" }.png' />
@@ -32,7 +32,7 @@
 				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[1] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[2] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[3] : "blank" }.png' />
-				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.drawDeck.topCard : "blank" }.png' />
+				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.lastCard : "blank" }.png' />
 			</div>
 		</div>
 	</div>

@@ -12,10 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.smartcardio.Card;
 
-import model.Deck;
 import model.WarLogic;
+
 
 /**
  * @author micah cooper
@@ -27,8 +26,6 @@ import model.WarLogic;
 )
 public class WarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public Card card;
-	public Deck deck;
 	public WarLogic warGame;
 	public HashMap<String,WarLogic> warGames;
 	
@@ -51,6 +48,17 @@ public class WarServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/index.jsp";
+		if( warGames.get( request.getSession().getId() ) == null )
+		{
+			System.out.println("start new game in warServlet");
+			warGame = new WarLogic();
+			warGame.start();
+			warGames.put( request.getSession().getId(), warGame );
+		}
+		else{
+			warGame = warGames.get( request.getSession().getId() );
+		}
+		
 		
 		//reset and re-deal the decks
 		if( request.getParameter("reset") != null ){
@@ -72,13 +80,6 @@ public class WarServlet extends HttpServlet {
 		if( request.getParameter( "draw" ) != null){
 			//System.out.println("Request to start game");
 			//we have a new game
-			if( warGames.get( request.getSession().getId() ) == null )
-			{
-				System.out.println("start new game in warServlet");
-				warGame = new WarLogic();
-				warGame.start();
-				warGames.put( request.getSession().getId(), warGame );
-			}
 			
 			if( !warGame.takeTurn() ){
 				System.out.println("Game Over");
@@ -87,7 +88,7 @@ public class WarServlet extends HttpServlet {
 		}
 		
 		//we have a request to show war card
-		if( request.getParameter( "goToWar" ) != null){
+		if( request.getParameter( "goToWar" ) != null ){
 			System.out.println("Request to show war card");
 			//check to see if we can play more another round, are there cards, if no, game over
 			if( warGame.getDealer().isTimeOfWar() ){
