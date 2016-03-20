@@ -78,6 +78,9 @@ public class Dealer implements Serializable{
 		
 		winner.getWinDeck().addCard( loser.getWarCard() );
 		winner.getWinDeck().addCard( winner.getWarCard() );
+		
+		//winner.resetWarDeck();
+		//loser.resetWarDeck();
 	}
 	
 	/**

@@ -37,6 +37,8 @@ public class WarLogic implements Serializable {
 		
 	public boolean takeTurn(){
 		System.out.println("\n ============ NEW TURN ============= \n");
+		player1.resetWarDeck();
+		player2.resetWarDeck();
 		
 		//check to see if there are any cards left
 		if( player1.getDrawDeck().getCardsLeft() > 0 ){
@@ -85,7 +87,7 @@ public class WarLogic implements Serializable {
 		int totalSpoils = this.calculateSpoilsOfWar();
 		
 		dealer.addToSpoilsOfWar(player1, player2, totalSpoils);
-			
+		
 		//make sure we're not out of cards, time to end this
 		if( totalSpoils > 0 ){
 			//player1 wins the war

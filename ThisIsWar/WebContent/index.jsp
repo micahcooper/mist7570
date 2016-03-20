@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="model.WarLogic" %>
 <html>
 <html>
 <head>
@@ -19,17 +19,25 @@
 			<div class=card>
 				Player 1: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' />
 				Score: ${ warGame.player1.score }
-				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[1] : "blank" }.png' />
-				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[2] : "blank" }.png' />
-				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[3] : "blank" }.png' />
+				<%
+				WarLogic warGame = (WarLogic) session.getAttribute("warGame");
+				for(int i=1; i < warGame.getPlayer1().getWarDeck().getCardsLeft(); i++)	
+				{
+					request.setAttribute("card",warGame.getPlayer1().getWarDeck().getCard(i).toString() );%>
+					<img src= "classic-cards/${ card }.png"/>
+				<%}%>
 				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.warCard : "blank" }.png' />
 			</div>
 			<div class=card>
 				Player 2: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999" }.png' />
 				Score: ${ warGame.player2.score }
-				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[1] : "blank" }.png' />
-				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[2] : "blank" }.png' />
-				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[3] : "blank" }.png' />
+				<%
+				warGame = (WarLogic) session.getAttribute("warGame");
+				for(int i=1; i < warGame.getPlayer2().getWarDeck().getCardsLeft(); i++)	
+				{
+					request.setAttribute("card",warGame.getPlayer2().getWarDeck().getCard(i).toString() );%>
+					<img src= "classic-cards/${ card }.png"/>
+				<%}%>
 				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.warCard : "blank" }.png' />
 			</div>
 		</div>
