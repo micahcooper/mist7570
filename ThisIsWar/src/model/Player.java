@@ -13,6 +13,21 @@ public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Deck drawDeck,winDeck,memoryDeck,warDeck;
 	private String name;
+	private Card warCard;
+
+	/**
+	 * @return the warCard
+	 */
+	public Card getWarCard() {
+		return warCard;
+	}
+
+	/**
+	 * @param warCard the warCard to set
+	 */
+	public void setWarCard(Card warCard) {
+		this.warCard = warCard;
+	}
 
 	/**
 	 * 
@@ -115,14 +130,15 @@ public class Player implements Serializable {
 	public void keepWarDeck(){
 		for( int i=0; i < getWarDeck().getCardsLeft(); i++){
 			getWinDeck().addCard( getWarDeck().getCard(i) );
-			this.getWinDeck().addCard( this.getWarDeck().getCard(i) );
 		}
 	}
 
-	public void takeCard(Player loser){
-		getWinDeck().addCard(getDrawDeck().removeCard(0));
+	public void takesCard(Player loser){
 		getWinDeck().addCard(loser.getDrawDeck().removeCard(0));
+		getWinDeck().addCard(getDrawDeck().removeCard(0));
 	}
 
-	
+	public int getScore(){
+		return this.winDeck.getCardsLeft();
+	}
 }

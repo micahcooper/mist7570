@@ -37,18 +37,20 @@ public class WarLogic implements Serializable {
 		
 	public boolean takeTurn(){
 		System.out.println("\n ============ NEW TURN ============= \n");
+		
 		//check to see if there are any cards left
 		if( player1.getDrawDeck().getCardsLeft() > 0 ){
 			this.memorizePlayersDrawDeck();
+
 			//player1 wins
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
-				player1.takeCard(player2);
+				player1.takesCard(player2);
 				message = "player 1 wins";
 				System.out.println( player1.getName()+" wins with "+player1.getWinDeck().getLastCard()+", deck size:"+player1.getDrawDeck().getCardsLeft() );
 			}
 			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
-				player2.takeCard(player1);
+				player2.takesCard(player1);
 				message = "playerr 2 wins";
 				System.out.println( player2.getName()+" wins with "+player2.getWinDeck().getLastCard()+", deck size:"+player2.getDrawDeck().getCardsLeft() );
 			}
@@ -59,7 +61,22 @@ public class WarLogic implements Serializable {
 			}
 			return true;
 		}
-		message = "Game Over";
+		
+		return gameOver();
+	}
+
+	/**
+	 * @return
+	 */
+	private boolean gameOver() {
+		dealer.setShowCard(false);
+		
+		if( player1.getScore() > player2.getScore())
+			message = "Game Over, player 1 wins";
+		else if (player1.getScore() < player2.getScore())
+			message = "Game Over, player 2 wins";
+			else
+				message = "Game ends in a draw.";
 		return false;
 	}
 	
@@ -72,12 +89,12 @@ public class WarLogic implements Serializable {
 		//make sure we're not out of cards, time to end this
 		if( totalSpoils > 0 ){
 			//player1 wins the war
-			if( player1.getWarDeck().getLastCard().getValue() > player2.getWarDeck().getLastCard().getValue() ){
+			if( player1.getWarCard().getValue() > player2.getWarCard().getValue() ){
 				dealer.toTheVictorGoesTheSpoils(player1, player2);
 				message = "Player 1 wins";
 			}
 			//player2 wins the war
-			else if( player1.getWarDeck().getLastCard().getValue() < player2.getWarDeck().getLastCard().getValue() ){
+			else if( player1.getWarCard().getValue() < player2.getWarCard().getValue() ){
 				dealer.toTheVictorGoesTheSpoils(player2, player1);
 				message = "Player 2 wins";
 			}
@@ -95,17 +112,11 @@ public class WarLogic implements Serializable {
 	private int calculateSpoilsOfWar(){
 			int totalSpoils;
 		
-		//check to see who has the least amount of cards, then calculate the cards available for the spoils of war
-		if( player1.getDrawDeck().getCardsLeft() <= player2.getDrawDeck().getCardsLeft())
-			if( player1.getDrawDeck().getCardsLeft() > 4 )
+			//need five cards for normal war round, current card+3 lay down+war card
+			if( player1.getDrawDeck().getCardsLeft() > 5 )
 				totalSpoils = 3;
 			else
 				totalSpoils = player1.getDrawDeck().getCardsLeft()-2;
-		else
-			if( player2.getDrawDeck().getCardsLeft() > 4 )
-				totalSpoils = 3;
-			else
-				totalSpoils = player2.getDrawDeck().getCardsLeft()-2;
 		
 		return totalSpoils;
 	}

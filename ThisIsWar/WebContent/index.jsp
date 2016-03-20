@@ -18,19 +18,19 @@
 		<div id=cards>
 			<div class=card>
 				Player 1: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' />
-				Score: ${ warGame.player1.winDeck.cardsLeft }
+				Score: ${ warGame.player1.score }
 				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[1] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[2] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.cards[3] : "blank" }.png' />
-				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.warDeck.lastCard : "blank" }.png' />
+				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.warCard : "blank" }.png' />
 			</div>
 			<div class=card>
 				Player 2: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999" }.png' />
-				Score: ${ warGame.player2.winDeck.cardsLeft }
+				Score: ${ warGame.player2.score }
 				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[1] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[2] : "blank" }.png' />
 				<img src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.cards[3] : "blank" }.png' />
-				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.warDeck.lastCard : "blank" }.png' />
+				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.warCard : "blank" }.png' />
 			</div>
 		</div>
 	</div>

@@ -48,26 +48,36 @@ public class Dealer implements Serializable{
 	}
 	
 	public void addToSpoilsOfWar(Player player1, Player player2, int totalSpoils){
-		System.out.println("cards per player for spoils size: "+totalSpoils);
+		System.out.println("spoils of war size: "+totalSpoils);
 		System.out.println( player1.getName()+": "+player1.getDrawDeck().toString()+" size:"+player1.getDrawDeck().getCardsLeft() );
 		System.out.println( player2.getName()+": "+player2.getDrawDeck().toString()+" size:"+player2.getDrawDeck().getCardsLeft() );
 		
 		player1.resetWarDeck();
 		player2.resetWarDeck();
+		
+		//add current card
 		player1.getWarDeck().addCard(player1.getDrawDeck().removeCard(0));
 		player2.getWarDeck().addCard(player2.getDrawDeck().removeCard(0));
 		
-		for(int i=0; i<=totalSpoils; i++){
+		for(int i=0; i<totalSpoils; i++){
 			player1.getWarDeck().addCard( player1.getDrawDeck().removeCard(0) );
 			player2.getWarDeck().addCard( player2.getDrawDeck().removeCard(0) );
 		}
+		
+		//take war card from drawdeck
+		player1.setWarCard( player1.getDrawDeck().removeCard(0) );
+		player2.setWarCard( player2.getDrawDeck().removeCard(0) );
 	}
 	
 	public void toTheVictorGoesTheSpoils(Player winner, Player loser){
+		
 		for( int i=0; i < loser.getWarDeck().getCardsLeft(); i++){
 			winner.getWinDeck().addCard( loser.getWarDeck().getCard(i) );
 			winner.getWinDeck().addCard( winner.getWarDeck().getCard(i) );
 		}
+		
+		winner.getWinDeck().addCard( loser.getWarCard() );
+		winner.getWinDeck().addCard( winner.getWarCard() );
 	}
 	
 	/**

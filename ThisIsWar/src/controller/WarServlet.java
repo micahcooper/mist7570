@@ -83,7 +83,6 @@ public class WarServlet extends HttpServlet {
 			
 			if( !warGame.takeTurn() ){
 				System.out.println("Game Over");
-				
 			}
 		}
 		
