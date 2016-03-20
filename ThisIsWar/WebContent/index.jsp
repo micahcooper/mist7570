@@ -11,9 +11,7 @@
 <div id=container>
 	<div id=header>
 		<h1>This is War</h1>
-		<p> ${ warGame.dealer.showCard && warGame.player1.memoryDeck.lastCard.value > warGame.player2.memoryDeck.lastCard.value ? 'player 1 wins': "" }</p>
-		<p> ${ warGame.dealer.showCard && warGame.player1.memoryDeck.lastCard.value < warGame.player2.memoryDeck.lastCard.value ? 'player 2 wins': "" }</p>
-		<p> ${ warGame.dealer.showCard && warGame.player1.memoryDeck.lastCard.value == warGame.player2.memoryDeck.lastCard.value ? 'It has begun! Choose your war card wisely.':'' }
+		<p>${ warGame.message }</p>
 	</div>
 	
 	<div id=gameBoard>

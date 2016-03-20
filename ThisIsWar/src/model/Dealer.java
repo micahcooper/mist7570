@@ -22,38 +22,29 @@ public class Dealer implements Serializable{
 		this.gameDeck = new Deck();
 	}
 	
-	public void deal(Player player1, Player player2){
+	public void dealCards(Player player1, Player player2, boolean isTestGame){
 		Deck deck1,deck2;
 		deck1 = new Deck();
 		deck2 = new Deck();
 		
-		gameDeck.newDeck();
-		gameDeck.shuffleDeck();
-		
-		System.out.println(this.gameDeck.toString());
-		
-		while( gameDeck.getCardsLeft() > 0 ){
-			deck1.addCard(gameDeck.removeCard());
-			deck2.addCard(gameDeck.removeCard());
+		if(!isTestGame){
+			gameDeck.newDeck();
+			gameDeck.shuffleDeck();
+			
+			while( gameDeck.getCardsLeft() > 0 ){
+				deck1.addCard(gameDeck.removeCard());
+				deck2.addCard(gameDeck.removeCard());
+			}
+		}
+		else{
+			deck1.stackDeck();
+			deck2.stackDeckAlternate();
 		}
 		
-		player1.addDrawDeck(deck1);
-		player2.addDrawDeck(deck2);;
-		
-	}
-	
-	public void test(Player player1, Player player2){
-		Deck deck1,deck2;
-		System.out.print(player1.getName()+" gets a ");
-		deck1 = new Deck();
-		System.out.print(player2.getName()+" gets a ");
-		deck2 = new Deck();
-		
-		deck1.stackDeck();
-		deck2.stackDeckAlternate();
 		
 		player1.addDrawDeck(deck1);
 		player2.addDrawDeck(deck2);;
+		
 	}
 	
 	public void addToSpoilsOfWar(Player player1, Player player2, int totalSpoils){
@@ -77,18 +68,6 @@ public class Dealer implements Serializable{
 			winner.getWinDeck().addCard( loser.getWarDeck().getCard(i) );
 			winner.getWinDeck().addCard( winner.getWarDeck().getCard(i) );
 		}
-	}
-	
-	public void keepWarDeck(Player player1, Player player2){
-		for( int i=0; i < player1.getWarDeck().getCardsLeft(); i++){
-			player1.getWinDeck().addCard( player1.getWarDeck().getCard(i) );
-			player2.getWinDeck().addCard( player2.getWarDeck().getCard(i) );
-		}
-	}
-	
-	public void takeCard(Player winner, Player loser){
-		winner.getWinDeck().addCard(winner.getDrawDeck().removeCard(0));
-		winner.getWinDeck().addCard(loser.getDrawDeck().removeCard(0));
 	}
 	
 	/**

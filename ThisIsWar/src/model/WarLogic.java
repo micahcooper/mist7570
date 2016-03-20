@@ -12,6 +12,10 @@ import java.io.Serializable;
 public class WarLogic implements Serializable {
 	private Dealer dealer;
 	private Player player1, player2;
+	private String message;
+	
+
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -22,18 +26,15 @@ public class WarLogic implements Serializable {
 		dealer = new Dealer();
 		player1 = new Player("john");
 		player2 = new Player("sara");
+		message = "";
 	}
 	
-	public void start(){
-		dealer.deal(player1, player2);
+	public void start(boolean isTestGame){
+		dealer.dealCards(player1, player2, isTestGame);
 		dealer.setShowCard(true);
+		message = "";
 	}
-	
-	public void test(){
-		dealer.test(player1, player2);
-		dealer.setShowCard(true);
-	}
-	
+		
 	public boolean takeTurn(){
 		System.out.println("\n ============ NEW TURN ============= \n");
 		//check to see if there are any cards left
@@ -41,20 +42,24 @@ public class WarLogic implements Serializable {
 			this.memorizePlayersDrawDeck();
 			//player1 wins
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
-				dealer.takeCard(player1, player2);
+				player1.takeCard(player2);
+				message = "player 1 wins";
 				System.out.println( player1.getName()+" wins with "+player1.getWinDeck().getLastCard()+", deck size:"+player1.getDrawDeck().getCardsLeft() );
 			}
 			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
-				dealer.takeCard(player2, player1);
+				player2.takeCard(player1);
+				message = "playerr 2 wins";
 				System.out.println( player2.getName()+" wins with "+player2.getWinDeck().getLastCard()+", deck size:"+player2.getDrawDeck().getCardsLeft() );
 			}
 			//it's a tie, time for war
 			else{
+				message = "New war game.";
 				dealer.setTimeOfWar(true);
 			}
 			return true;
 		}
+		message = "Game Over";
 		return false;
 	}
 	
@@ -69,14 +74,18 @@ public class WarLogic implements Serializable {
 			//player1 wins the war
 			if( player1.getWarDeck().getLastCard().getValue() > player2.getWarDeck().getLastCard().getValue() ){
 				dealer.toTheVictorGoesTheSpoils(player1, player2);
+				message = "Player 1 wins";
 			}
 			//player2 wins the war
 			else if( player1.getWarDeck().getLastCard().getValue() < player2.getWarDeck().getLastCard().getValue() ){
 				dealer.toTheVictorGoesTheSpoils(player2, player1);
+				message = "Player 2 wins";
 			}
 			//tie, players get to keep their cards
 			else{
-				dealer.keepWarDeck(player1, player2);
+				message = "War ends in a draw!";
+				player1.keepWarDeck();
+				player2.keepWarDeck();
 			}
 		}
 		//since we're only doing one war round, just return false for continue another war round
@@ -150,4 +159,17 @@ public class WarLogic implements Serializable {
 		this.dealer = dealer;
 	}
 
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

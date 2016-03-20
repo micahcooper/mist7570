@@ -52,7 +52,7 @@ public class WarServlet extends HttpServlet {
 		{
 			System.out.println("start new game in warServlet");
 			warGame = new WarLogic();
-			warGame.start();
+			warGame.start(false);
 			warGames.put( request.getSession().getId(), warGame );
 		}
 		else{
@@ -64,7 +64,7 @@ public class WarServlet extends HttpServlet {
 		if( request.getParameter("reset") != null ){
 			System.out.println(request.getParameter("reset"));
 			warGame = new WarLogic();
-			warGame.start();
+			warGame.start(false);
 			warGames.put( request.getSession().getId(), warGame );
 		}
 		
@@ -72,7 +72,7 @@ public class WarServlet extends HttpServlet {
 		if( request.getParameter("test") != null ){
 			System.out.println(request.getParameter("test"));
 			warGame = new WarLogic();
-			warGame.test();
+			warGame.start(true);
 			warGames.put( request.getSession().getId(), warGame );
 		}
 		

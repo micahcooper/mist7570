@@ -47,7 +47,8 @@ public class Player implements Serializable {
 
 	public void addDrawDeck(Deck drawDeck){
 		this.drawDeck = drawDeck;
-		
+		//new drawDeck means we need a new memoryDeck
+		this.memoryDeck = new Deck();
 		System.out.println(this.getName()+": "+drawDeck.toString()+" size:"+drawDeck.getCardsLeft());
 	}
 
@@ -109,6 +110,18 @@ public class Player implements Serializable {
 	
 	public void resetWarDeck(){
 		this.warDeck = new Deck();
+	}
+
+	public void keepWarDeck(){
+		for( int i=0; i < getWarDeck().getCardsLeft(); i++){
+			getWinDeck().addCard( getWarDeck().getCard(i) );
+			this.getWinDeck().addCard( this.getWarDeck().getCard(i) );
+		}
+	}
+
+	public void takeCard(Player loser){
+		getWinDeck().addCard(getDrawDeck().removeCard(0));
+		getWinDeck().addCard(loser.getDrawDeck().removeCard(0));
 	}
 
 	
