@@ -21,8 +21,19 @@ public class WarLogic implements Serializable {
 	public WarLogic() {
 		System.out.println("create new war game logic");
 		dealer = new Dealer();
-		player1 = new Player("john");
-		player2 = new Player("sara");
+		player1 = new Player("Player 1");
+		player2 = new Player("Player 2");
+		message = "";
+	}
+	
+	/**
+	 * empty constructor, setup some default initial values, instantiate class variables
+	 */
+	public WarLogic(String player1name, String player2name) {
+		System.out.println("create new war game logic");
+		dealer = new Dealer();
+		player1 = new Player(player1name);
+		player2 = new Player(player2name);
 		message = "";
 	}
 	

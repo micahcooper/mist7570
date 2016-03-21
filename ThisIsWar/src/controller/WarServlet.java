@@ -47,11 +47,14 @@ public class WarServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String player1name, player2name;
 		String url = "/index.jsp";
+		
+		//check for existing war game, if none exist create a new one
 		if( warGames.get( request.getSession().getId() ) == null )
 		{
-			System.out.println("start new game in warServlet");
 			warGame = new WarLogic();
+			
 			warGame.start(false);
 			warGames.put( request.getSession().getId(), warGame );
 		}
@@ -66,6 +69,7 @@ public class WarServlet extends HttpServlet {
 			warGame = new WarLogic();
 			//isTestGame=false
 			warGame.start(false);
+			warGame.getDealer().setShowCard(false);
 			warGames.put( request.getSession().getId(), warGame );
 		}
 		
@@ -81,8 +85,26 @@ public class WarServlet extends HttpServlet {
 		//we have a request to draw a card
 		if( request.getParameter( "draw" ) != null){
 			//System.out.println("Request to start game");
-			//we have a new game
 			
+			
+			
+			if( request.getParameter("player1Name") != null ){
+				player1name = (String) request.getParameter("player1Name");
+				if(!player1name.equals("")){
+					warGame.getPlayer1().setName(player1name);
+					request.getSession().setAttribute("name1Set", true);
+				}
+			}
+			
+			if( request.getParameter("player2Name") != null ){
+				player2name = (String) request.getParameter("player2Name");
+				if(!player2name.equals("")){
+					warGame.getPlayer2().setName(player2name);
+					request.getSession().setAttribute("name1Set", true);
+				}
+			}
+			
+			warGame.getDealer().setShowCard(true);
 			if( !warGame.takeTurn() ){
 				System.out.println("Game Over");
 			}

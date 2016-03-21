@@ -18,7 +18,7 @@
 	<div id=gameBoard>
 		<div id=cards>
 			<div class=cards>
-				<div class=player style="float:left;">Player 1, Score: ${ warGame.player1.score }</div>
+				<div class=player style="float:left;">${warGame.player1.name}, Score: ${ warGame.player1.score }</div>
 				<div class=card><img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' /></div>
 				<%
 				if(warGame != null)
@@ -30,7 +30,7 @@
 			</div>
 			<div class=break></div>
 			<div class=cards>
-				<div class=player style="float:left;">Player 2, Score: ${ warGame.player2.score }</div>
+				<div class=player style="float:left;">${warGame.player2.name}, Score: ${ warGame.player2.score }</div>
 				<div class=card><img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999"  }.png' /></div>
 				<%
 				if(warGame != null)
@@ -45,6 +45,11 @@
 	<div class=break></div>
 	<div id=controls>
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
+			${ !warGame.dealer.showCard && !name1Set ? "<label>First Player Name</label>" : "" }
+			${ !warGame.dealer.showCard && !name1Set ? "<input type='text' name='player1Name'>" : "" }
+			${ !warGame.dealer.showCard && !name2Set ? "<label>Second Player Name</label>" : "" }
+			${ !warGame.dealer.showCard && !name2Set ? "<input type='text' name='player2Name'>" : "" }
+			${ !warGame.dealer.showCard  ? "<br />" : "" }
 			${ warGame.dealer.showCard  ? "" : "<input type='submit' name='draw' value='Draw and Start Game'>" }
 			${ warGame.dealer.showCard && !warGame.dealer.timeOfWar ? "<input type='submit' name='draw' value='Draw'>" : "" }
 			${ warGame.dealer.timeOfWar  ? "<input type='submit' name='goToWar' value='Show War Card'>" : "" }
