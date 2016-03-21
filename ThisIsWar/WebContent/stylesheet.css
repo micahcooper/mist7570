@@ -36,6 +36,8 @@
 }
 
 .player{
+	font-family:Georgia;
+	font-size:14px;
 	min-width:122px;
 	padding:10px;
 }
