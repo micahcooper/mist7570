@@ -25,8 +25,11 @@ public class Card implements Serializable {
 		System.out.print("card created ");
 	}
 	
+	/**
+	 * @param value the int amount of a card
+	 * overloaded method to set just the value
+	 */
 	public Card(int value) {
-		//this.suit = "";
 		this.value = value;
 	}
 

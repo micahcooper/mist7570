@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 /**
  * @author micah cooper
+ * 
+ * Dealer class to help handle some utility methods for the war game like deal, distributing the won cards
  *
  */
 public class Dealer implements Serializable{
@@ -14,6 +16,9 @@ public class Dealer implements Serializable{
 	private Deck gameDeck;
 	private boolean showCard, timeOfWar;
 
+	/**
+	 * setup class variables
+	 */
 	public Dealer(){
 		super();
 		showCard=false;
@@ -22,6 +27,11 @@ public class Dealer implements Serializable{
 		this.gameDeck = new Deck();
 	}
 	
+	/**
+	 * @param player1 
+	 * @param player2
+	 * @param isTestGame  true means to deal the test stacked deck, false is deal a normal game
+	 */
 	public void dealCards(Player player1, Player player2, boolean isTestGame){
 		Deck deck1,deck2;
 		deck1 = new Deck();
@@ -47,6 +57,11 @@ public class Dealer implements Serializable{
 		
 	}
 	
+	/**
+	 * @param player1
+	 * @param player2
+	 * @param totalSpoils the number of cards that can be laid down for a war round (not including the current card or needed war card)
+	 */
 	public void addToSpoilsOfWar(Player player1, Player player2, int totalSpoils){
 		System.out.println("spoils of war size: "+totalSpoils);
 		System.out.println( player1.getName()+": "+player1.getDrawDeck().toString()+" size:"+player1.getDrawDeck().getCardsLeft() );
@@ -69,6 +84,10 @@ public class Dealer implements Serializable{
 		player2.setWarCard( player2.getDrawDeck().removeCard(0) );
 	}
 	
+	/**
+	 * @param winner
+	 * @param loser
+	 */
 	public void toTheVictorGoesTheSpoils(Player winner, Player loser){
 		
 		for( int i=0; i < loser.getWarDeck().getCardsLeft(); i++){

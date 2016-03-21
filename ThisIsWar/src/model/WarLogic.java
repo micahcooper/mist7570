@@ -13,13 +13,10 @@ public class WarLogic implements Serializable {
 	private Dealer dealer;
 	private Player player1, player2;
 	private String message;
-	
-
-
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * empty constructor, setup some default initial values, instantiate class variables
 	 */
 	public WarLogic() {
 		System.out.println("create new war game logic");
@@ -29,12 +26,18 @@ public class WarLogic implements Serializable {
 		message = "";
 	}
 	
+	/**
+	 * @param isTestGame is this a test game (true) or real game (false)
+	 */
 	public void start(boolean isTestGame){
 		dealer.dealCards(player1, player2, isTestGame);
 		dealer.setShowCard(true);
 		message = "";
 	}
 		
+	/**
+	 * @return can we continue taking turns (true) if not then false
+	 */
 	public boolean takeTurn(){
 		System.out.println("\n ============ NEW TURN ============= \n");
 		player1.resetWarDeck();
@@ -53,7 +56,7 @@ public class WarLogic implements Serializable {
 			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
 				player2.takesCard(player1);
-				message = "playerr 2 wins";
+				message = "player 2 wins";
 				System.out.println( player2.getName()+" wins with "+player2.getWinDeck().getLastCard()+", deck size:"+player2.getDrawDeck().getCardsLeft() );
 			}
 			//it's a tie, time for war
@@ -64,24 +67,28 @@ public class WarLogic implements Serializable {
 			return true;
 		}
 		
+		//refactoring needed here since the method only returns false
 		return gameOver();
 	}
 
 	/**
-	 * @return
+	 * @return only the false value for the game is over
 	 */
 	private boolean gameOver() {
 		dealer.setShowCard(false);
 		
 		if( player1.getScore() > player2.getScore())
-			message = "Game Over, player 1 wins";
+			message = "Game Over, player 1 wins. Click reset to play again.";
 		else if (player1.getScore() < player2.getScore())
-			message = "Game Over, player 2 wins";
+			message = "Game Over, player 2 wins. Click reset to play again.";
 			else
-				message = "Game ends in a draw.";
+				message = "Game ends in a draw. Click reset to play again.";
 		return false;
 	}
 	
+	/**
+	 * @return only a false value since 1 round of war is played
+	 */
 	public boolean war(){
 		//now we know how many cards to use in war
 		int totalSpoils = this.calculateSpoilsOfWar();
@@ -111,6 +118,9 @@ public class WarLogic implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * @return the number of cards to lay down in war
+	 */
 	private int calculateSpoilsOfWar(){
 			int totalSpoils;
 		
@@ -123,6 +133,9 @@ public class WarLogic implements Serializable {
 		return totalSpoils;
 	}
 	
+	/**
+	 * create a memory deck of the cards played for use later in the jsp page
+	 */
 	private void memorizePlayersDrawDeck(){
 		player1.getMemoryDeck().addCard(player1.getDrawDeck().getCard(0));
 		player2.getMemoryDeck().addCard(player2.getDrawDeck().getCard(0));

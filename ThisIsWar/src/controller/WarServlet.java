@@ -30,7 +30,7 @@ public class WarServlet extends HttpServlet {
 	public HashMap<String,WarLogic> warGames;
 	
 	/**
-	 * 
+	 * empty constructor to setup only the HashMap for holding concurrent war games
 	 */
 	public WarServlet() {
 		warGames = new HashMap<String,WarLogic>();
@@ -60,10 +60,11 @@ public class WarServlet extends HttpServlet {
 		}
 		
 		
-		//reset and re-deal the decks
+		//reset and re-deal the decks for a normal game
 		if( request.getParameter("reset") != null ){
 			System.out.println(request.getParameter("reset"));
 			warGame = new WarLogic();
+			//isTestGame=false
 			warGame.start(false);
 			warGames.put( request.getSession().getId(), warGame );
 		}
@@ -72,6 +73,7 @@ public class WarServlet extends HttpServlet {
 		if( request.getParameter("test") != null ){
 			System.out.println(request.getParameter("test"));
 			warGame = new WarLogic();
+			//isTestGame=true
 			warGame.start(true);
 			warGames.put( request.getSession().getId(), warGame );
 		}

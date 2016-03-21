@@ -26,20 +26,6 @@ public class Deck implements Serializable {
 		this.hasJokers = false;
 		System.out.println("new deck..");
 	}
-	
-	/**
-	 * @return the cards
-	 */
-	public ArrayList<Card> getCards() {
-		return cards;
-	}
-
-	/**
-	 * @param cards the cards to set
-	 */
-	public void setCards(ArrayList<Card> cards) {
-		this.cards = cards;
-	}
 
 	/**
 	 * @param cards
@@ -147,6 +133,9 @@ public class Deck implements Serializable {
 		return cards.get(index);
 	}
 	
+	/**
+	 * @return the top card of the deck
+	 */
 	public Card getTopCard(){
 		if( !cards.isEmpty() )
 			return cards.get(0);
@@ -154,6 +143,9 @@ public class Deck implements Serializable {
 		return new Card(999);
 	}
 	
+	/**
+	 * @return the last added card to a deck
+	 */
 	public Card getLastCard(){
 		if( !cards.isEmpty() )
 			return cards.get(cards.size()-1);
@@ -192,6 +184,20 @@ public class Deck implements Serializable {
 	 */	
 	public int getCardsLeft(){
 		return cards.size();
+	}
+	
+	/**
+	 * @return the cards
+	 */
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+
+	/**
+	 * @param cards the cards to set
+	 */
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
 	}
 
 	/**
@@ -243,7 +249,7 @@ public class Deck implements Serializable {
 	}
 	
 	/**
-	 * sets the deck to a predetermined order - useful for testing
+	 * sets the alternate deck to a predetermined order - useful for testing
 	 */	
 	public void stackDeckAlternate(){
 		this.cards = new ArrayList<Card>();

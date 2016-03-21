@@ -2,7 +2,7 @@
 	clear:both;
 }
 
-#cards {
+.card {
 	float:left;
 }
 
@@ -14,6 +14,7 @@
 #controls {
 	border:1px solid black;
 	margin: 0 auto;
+	padding:10px;
 	width:100%;
 }
 
@@ -21,16 +22,22 @@
 	background-color: #277714;
 	border:1px solid black;
 	float:left;
-	height: 250px;
 	margin: 0 auto;
+	padding:10px;
 	width: 100%;
 }
 
 #header {
 	border:1px solid black;
 	margin: 0 auto;
+	padding:10px;
 	text-align: center;
 	width:100%;
+}
+
+.player{
+	min-width:122px;
+	padding:10px;
 }
 
 #spoilsOfWar {
@@ -43,5 +50,4 @@
 }
 
 .warCard {
-	border: red thin solid;
 }

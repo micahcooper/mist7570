@@ -1,4 +1,5 @@
 <%@page import="model.WarLogic" %>
+<% WarLogic warGame = (WarLogic) session.getAttribute("warGame"); %>
 <html>
 <html>
 <head>
@@ -16,33 +17,31 @@
 	
 	<div id=gameBoard>
 		<div id=cards>
-			<div class=card>
-				Player 1: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' />
-				Score: ${ warGame.player1.score }
+			<div class=cards>
+				<div class=player style="float:left;">Player 1, Score: ${ warGame.player1.score }</div>
+				<div class=card><img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player1.memoryDeck.lastCard : "999"  }.png' /></div>
 				<%
-				WarLogic warGame = (WarLogic) session.getAttribute("warGame");
-				for(int i=1; i < warGame.getPlayer1().getWarDeck().getCardsLeft(); i++)	
-				{
-					request.setAttribute("card",warGame.getPlayer1().getWarDeck().getCard(i).toString() );%>
-					<img src= "classic-cards/${ card }.png"/>
-				<%}%>
-				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.warCard : "blank" }.png' />
+				if(warGame != null)
+					for(int i=1; i < warGame.getPlayer1().getWarDeck().getCardsLeft(); i++)	{
+						request.setAttribute("card",warGame.getPlayer1().getWarDeck().getCard(i).toString() );%>
+						<div class=card><img src= "classic-cards/${ card }.png"/></div>
+					<%}%>
+				<div class=card><img class=warCard src='classic-cards/${ showWarCard ?  warGame.player1.warCard : "blank" }.png' /></div>
 			</div>
-			<div class=card>
-				Player 2: <img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999" }.png' />
-				Score: ${ warGame.player2.score }
+			<div class=break></div>
+			<div class=cards>
+				<div class=player style="float:left;">Player 2, Score: ${ warGame.player2.score }</div>
+				<div class=card><img src='classic-cards/${ warGame.dealer.showCard ?  warGame.player2.memoryDeck.lastCard : "999"  }.png' /></div>
 				<%
-				warGame = (WarLogic) session.getAttribute("warGame");
-				for(int i=1; i < warGame.getPlayer2().getWarDeck().getCardsLeft(); i++)	
-				{
-					request.setAttribute("card",warGame.getPlayer2().getWarDeck().getCard(i).toString() );%>
-					<img src= "classic-cards/${ card }.png"/>
-				<%}%>
-				<img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.warCard : "blank" }.png' />
+				if(warGame != null)
+					for(int i=1; i < warGame.getPlayer2().getWarDeck().getCardsLeft(); i++)	{
+						request.setAttribute("card",warGame.getPlayer2().getWarDeck().getCard(i).toString() );%>
+						<div class=card><img src= "classic-cards/${ card }.png"/></div>
+					<%}%>
+				<div class=card><img class=warCard src='classic-cards/${ showWarCard ?  warGame.player2.warCard : "blank" }.png' /></div>
 			</div>
 		</div>
 	</div>
-	
 	<div class=break></div>
 	<div id=controls>
 		<form name="guessForm" action="warGame" method="post" onsubmit="return validateForm()">
