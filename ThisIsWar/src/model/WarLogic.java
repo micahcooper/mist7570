@@ -61,13 +61,13 @@ public class WarLogic implements Serializable {
 			//player1 wins
 			if( player1.getDrawDeck().getCard(0).getValue() > player2.getDrawDeck().getCard(0).getValue() ){
 				player1.takesCard(player2);
-				message = "player 1 wins";
+				message = player1.getName()+" wins";
 				System.out.println( player1.getName()+" wins with "+player1.getWinDeck().getLastCard()+", deck size:"+player1.getDrawDeck().getCardsLeft() );
 			}
 			//player2 wins
 			else if( player1.getDrawDeck().getCard(0).getValue() < player2.getDrawDeck().getCard(0).getValue() ){
 				player2.takesCard(player1);
-				message = "player 2 wins";
+				message = player2.getName()+" wins";
 				System.out.println( player2.getName()+" wins with "+player2.getWinDeck().getLastCard()+", deck size:"+player2.getDrawDeck().getCardsLeft() );
 			}
 			//it's a tie, time for war
