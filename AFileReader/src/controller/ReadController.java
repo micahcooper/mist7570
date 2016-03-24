@@ -31,21 +31,26 @@ public class ReadController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		String url="/read.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url="index.jsp";
+		
 		
 		Reader reader = new Reader( this.getServletContext().getResource("file.txt") );
 		reader.read();
-		doGet(request, response);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		
+		request.getSession().setAttribute("contents", reader.getContents());
+		
+		
+		
+		doGet(request, response);
 	}
 
 }

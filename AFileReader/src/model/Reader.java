@@ -15,6 +15,7 @@ import java.net.URL;
 public class Reader {
 	private File file;
 	private URL url;
+	private String contents;
 	
 	/**
 	 * 
@@ -36,6 +37,7 @@ public class Reader {
 			char c;
 			//System.out.println( "filename: "+file.toString()+" - message: "+read.read() );
 			while ((c = (char)read.read()) != -1) {
+				contents += c;
 	            System.out.print( c );
 	         }
 			read.close();
@@ -43,5 +45,19 @@ public class Reader {
 		catch(Exception e){
 			System.out.println( "ERROR: "+e.getMessage() );
 		}
+	}
+
+	/**
+	 * @return the contents
+	 */
+	public String getContents() {
+		return contents;
+	}
+
+	/**
+	 * @param contents the contents to set
+	 */
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 }
