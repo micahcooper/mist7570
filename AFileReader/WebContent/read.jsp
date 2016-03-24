@@ -10,7 +10,7 @@
 
 <h1>Details of your file</h1>
 
-<p>${ contents }</p>
+<p>${contents}</p>
 <p>Go back to <a href="index.jsp">index</a></p>
 	
 </body>

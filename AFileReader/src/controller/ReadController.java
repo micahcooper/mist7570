@@ -14,7 +14,7 @@ import model.Reader;
 /**
  * Servlet implementation class ReadController
  */
-@WebServlet(urlPatterns = { "/ReadController", "/doRead" })
+@WebServlet(urlPatterns = { "/ReadController", "/read.do" })
 public class ReadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,9 +31,8 @@ public class ReadController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url="/read.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		doPost(request, response);
+		
 	}
 
 	/**
@@ -48,9 +47,11 @@ public class ReadController extends HttpServlet {
 		
 		request.getSession().setAttribute("contents", reader.getContents());
 		
+		String url="/read.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 		
 		
-		doGet(request, response);
 	}
 
 }

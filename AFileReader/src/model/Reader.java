@@ -34,13 +34,14 @@ public class Reader {
 		try{
 			file = new File( url.getPath() );
 			FileReader read = new FileReader(file);
-			char c;
+			int c;
 			//System.out.println( "filename: "+file.toString()+" - message: "+read.read() );
-			while ((c = (char)read.read()) != -1) {
-				contents += c;
-	            System.out.print( c );
+			while ((c = read.read()) != -1) {
+				contents += (char) c;
+	            System.out.print( (char) c );
 	         }
 			read.close();
+			System.out.println("\nfinished");
 		}
 		catch(Exception e){
 			System.out.println( "ERROR: "+e.getMessage() );

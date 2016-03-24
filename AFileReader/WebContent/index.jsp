@@ -17,9 +17,12 @@ c:import>
 <title>A File Reader</title>
 </head>
 <body>
-${ param.test }
+
 <c:if test="request.getParameter('test') == null">
-	<c:out value="true" />
+	<p>This page has not been accessed yet: <c:out value="true" /></p>
+</c:if>
+<c:if test="request.getParameter('test') != null">
+	<p>This page has been accessed : <c:out value="true" /></p>
 </c:if>
 
 <c:forEach var="i" begin="1" end="5">
@@ -30,7 +33,7 @@ ${ param.test }
    <c:out value="${name}"/><p>
 </c:forTokens>
 
-<form name="guessForm" action="doRead" method="post" onsubmit="return validateForm()">
+<form name="guessForm" action="read.do" method="post" onsubmit="return validateForm()">
 	<input type='text' name='test'>
 	<input type="submit" name="reset" value="RESET">
 </form>
