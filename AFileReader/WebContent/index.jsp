@@ -19,25 +19,14 @@ c:import>
 <title>A File Reader App</title>
 </head>
 <body>
-<h2>Static JSTL Examples</h2>
-<h3>if example</h3>
-<c:if test="${ param['read-file'] == null }">
-	<p>The filename parameter is empty: <c:out value="true" /></p>
-</c:if>
-<c:if test="${ param['read-file'] != null }">
-	<p>The filename parameter is empty: <c:out value="true" /></p>
-</c:if>
+<h2>JSTL Examples</h2>
 
-<h3>a forEach  example</h3>
-<c:forEach var="i" begin="1" end="5">
-	<c:out value="${i}" />
-</c:forEach>
+<ol>
+	<li><a href="static.jsp">Static JSTL Examples</a></li>
+	<li><a href="#filereader">A File Reader with JSTL</a> (see below)</li>
+</ol>
 
-<h3>a forTokens  example</h3>
-<c:forTokens items="apples,oranges,banana" delims="," var="name">
-   <c:out value="${name}"/><p>
-</c:forTokens>
-
+<a name="filereader"></a>
 <h2>The File Reader Portion</h2>
 <p>Added an interaction with files.  You can input a file name but it needs to exist in the package first.  You can enter file2.txt as an alternate option, otherwise the app defaults to file.txt.</p>
 <p>This should probably be an upload function instead.</p>
@@ -46,10 +35,6 @@ c:import>
 	<input type='text' name='filename' value='file.txt'>
 	<input type="submit" name="read-file" value="Read File">
 </form>
-
-<h3>Miscellaneous Tags</h3>
-<h4>formatNumber tag</h4>
-<fmt:formatNumber value="1000000000.00000" maxFractionDigits="3"/>
 
 </body>
 </html>
