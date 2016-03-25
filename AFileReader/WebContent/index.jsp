@@ -14,28 +14,35 @@ c:import>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>A File Reader</title>
+<title>A File Reader App</title>
 </head>
 <body>
-
-<c:if test="request.getParameter('test') == null">
-	<p>This page has not been accessed yet: <c:out value="true" /></p>
+<h2>JSTL Examples</h2>
+<h3>if example</h3>
+<c:if test="${ param['read-file'] == null }">
+	<p>The filename parameter is empty: <c:out value="true" /></p>
 </c:if>
-<c:if test="request.getParameter('test') != null">
-	<p>This page has been accessed : <c:out value="true" /></p>
+<c:if test="${ param['read-file'] != null }">
+	<p>The filename parameter is empty: <c:out value="true" /></p>
 </c:if>
 
+<h3>a forEach static example</h3>
 <c:forEach var="i" begin="1" end="5">
 	<c:out value="${i}" />
 </c:forEach>
 
-<c:forTokens items="Zara,nuha,roshy" delims="," var="name">
+<h3>a forTokens static example</h3>
+<c:forTokens items="apples,oranges,banana" delims="," var="name">
    <c:out value="${name}"/><p>
 </c:forTokens>
 
+<h2>The File Reader Portion</h2>
+<p>Added an interaction with files.  You can input a file name but it needs to exist in the package first.  You can enter file2.txt as an alternate option, otherwise the app defaults to file.txt.</p>
+<p>This should probably be an upload function instead.</p>
 <form name="guessForm" action="read.do" method="post" onsubmit="return validateForm()">
-	<input type='text' name='test'>
-	<input type="submit" name="reset" value="RESET">
+	<label>File Name</label>
+	<input type='text' name='filename' value='file.txt'>
+	<input type="submit" name="read-file" value="Read File">
 </form>
 
 </body>

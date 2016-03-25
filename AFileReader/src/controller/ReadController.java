@@ -30,7 +30,6 @@ public class ReadController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doPost(request, response);
 		
 	}
@@ -39,19 +38,21 @@ public class ReadController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Reader reader;
 		
+		if( request.getParameter("filename") == "")
+			reader = new Reader( this.getServletContext().getResource("file.txt") );
+		else
+			reader = new Reader( this.getServletContext().getResource( request.getParameter("filename") ) );
 		
-		Reader reader = new Reader( this.getServletContext().getResource("file.txt") );
 		reader.read();
-		
-		
 		request.getSession().setAttribute("contents", reader.getContents());
+
 		
 		String url="/read.jsp";
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
-		
-		
+		dispatcher.forward(request, response);	
 	}
 
 }

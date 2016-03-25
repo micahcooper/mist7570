@@ -23,6 +23,7 @@ public class Reader {
 	public Reader(URL url) {
 		System.out.println("reader created");
 		this.url = url;
+		contents="";
 	}
 
 	/**
@@ -37,8 +38,9 @@ public class Reader {
 			int c;
 			//System.out.println( "filename: "+file.toString()+" - message: "+read.read() );
 			while ((c = read.read()) != -1) {
-				contents += (char) c;
-	            System.out.print( (char) c );
+				//if( (char)c == null )
+					contents += (char) c;
+	            System.out.print( c );
 	         }
 			read.close();
 			System.out.println("\nfinished");
