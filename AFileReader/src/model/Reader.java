@@ -3,7 +3,7 @@
  */
 package model;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
@@ -21,7 +21,7 @@ public class Reader {
 	 * 
 	 */
 	public Reader(URL url) {
-		System.out.println("reader created");
+		//System.out.println("reader created");
 		this.url = url;
 		contents="";
 	}
@@ -30,7 +30,7 @@ public class Reader {
 	 * @param filename
 	 */
 	public void read(){
-		BufferedReader buffer;
+		//BufferedReader buffer;
 		
 		try{
 			file = new File( url.getPath() );
@@ -40,10 +40,10 @@ public class Reader {
 			while ((c = read.read()) != -1) {
 				//if( (char)c == null )
 					contents += (char) c;
-	            System.out.print( c );
+	            //System.out.print( c );
 	         }
 			read.close();
-			System.out.println("\nfinished");
+			//System.out.println("\nfinished");
 		}
 		catch(Exception e){
 			System.out.println( "ERROR: "+e.getMessage() );

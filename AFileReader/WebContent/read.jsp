@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +18,7 @@
    <c:set var="i" scope="page" value="${i+1}"/>
 </c:forTokens>
 
-<h3>Using if statment to check for the word 'World'</h3>
+<h3>Using if statement to check for the word 'World'</h3>
 <c:forTokens items="${ contents }" delims="," var="name">
 	<c:if test="${name == 'World'}">
 		<c:set var="foundWord" value="true" />
@@ -29,6 +31,9 @@
 <c:if test="${!foundWord}">
    		<p><c:out value="The word World was not found." /></p>
 </c:if>
+<h3>Miscellaneous Tags</h3>
+<h4>fmt tags, toLowerCase</h4>
+<p><c:out value="${fn:toLowerCase( contents ) }"/></p>
 
 <h4>Download the file examples here:</h4>
 <ol>
