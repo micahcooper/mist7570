@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbHelpers.ReadQuery;
+import model.Product;
+import persist.PersistenceModule;
+import persist.PersistenceModuleFactory;
+import persist.PersistenceModuleImpl;
 
 /**
  * Servlet implementation class ReadServlet
@@ -43,14 +46,24 @@ public class ReadServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Create a ReadQuery helper object
-		ReadQuery rq = new ReadQuery("grocery", "root", "");
+		//ReadQuery rq = new ReadQuery("grocery", "root", "");
+		PersistenceModule persist;
 		
-		// Get the html table from the REadQuery object
-		rq.doRead();
-		String table = rq.getHTMLTable();
+		try {
+			persist = PersistenceModuleFactory.createPersistenceModule();
+
+			// Get the html table from the REadQuery object
+			
+			String table = persist.getHTMLTable( persist.doReadAll() );
+			
+			// pass execution control to read.jsp along with the table
+			request.setAttribute("table", table);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		// pass execution control to read.jsp along with the table
-		request.setAttribute("table", table);
 		String url = "/read.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
