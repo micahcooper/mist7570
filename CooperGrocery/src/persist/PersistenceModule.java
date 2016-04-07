@@ -60,15 +60,16 @@ public class PersistenceModule {
 		}
 
 		public void doUpdate(Product product){
-			String query = "UPDATE products SET title=?, author=?, pages=? WHERE productID=?";
+			String query = "UPDATE products SET `Product Type`=?, Flavor=?, Price=?, Cost=?, Quatity=? WHERE sku=?";
 
 			try {
 				PreparedStatement ps = connection.prepareStatement(query);
 
-				//TODO ps.setString(1, product.getTitle());
-				//ps.setString(2, product.getAuthor());
-				//ps.setInt(3, product.getPages());
-				//ps.setInt(4, product.getProductID());
+				ps.setString(1, product.getProductType());
+				ps.setString(2, product.getFlavor());
+				ps.setDouble(3, product.getCost());
+				ps.setDouble(4, product.getPrice());
+				ps.setInt(5, product.getQuantity());
 
 				ps.executeUpdate();
 

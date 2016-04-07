@@ -1,5 +1,3 @@
-/controller/
-/model/
-/dbHelpers/
 /controllers/
+/model/
 /persist/
