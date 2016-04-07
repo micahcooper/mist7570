@@ -32,7 +32,7 @@ public class PersistenceModuleFactory {
   }
 
   public static PersistenceModule createPersistenceModule() throws Exception{
-  		return new PersistenceModuleImpl( p_conn );
+  		return new PersistenceModule( p_conn );
   }
 
 };

@@ -9,27 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Product;
 import persist.PersistenceModule;
 import persist.PersistenceModuleFactory;
-import persist.PersistenceModule;
 
 /**
- * Servlet implementation class ReadServlet
+ * Servlet implementation class DeleteServlet
  */
-@WebServlet(
-		description = "Controller for reading the books table", 
-		urlPatterns = { 
-				"/ReadServlet", 
-				"/read"
-		})
-public class ReadServlet extends HttpServlet {
+@WebServlet(description = "Deletes a record for a particular bookID", urlPatterns = { "/delete" })
+public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReadServlet() {
+    public DeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,33 +31,42 @@ public class ReadServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		// NEVER make database changes via a GET request.
+		// You don't want a web crawler accidentally deleting your data!
+		throw new RuntimeException();
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Create a ReadQuery helper object
-		//ReadQuery rq = new ReadQuery("grocery", "root", "");
-		PersistenceModule persist;
+		// get the product sku
+		String sku = request.getParameter("sku");
 		
+		// create a dbHelper object
+		PersistenceModule persist;
 		try {
 			persist = PersistenceModuleFactory.createPersistenceModule();
-
-			// Get the html table from the REadQuery object
-			
-			String table = persist.getHTMLTable( persist.doReadAll() );
-			
-			// pass execution control to read.jsp along with the table
-			request.setAttribute("table", table);
-			
+			// use deleteQuery to delete the product record
+			persist.doDelete(sku);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		String url = "/read.jsp";
+		
+		
+		// Consider: We may wish to redirect to the "/read" page rather than forward.
+		// What's the difference? A redirect creates a new HTTP request, and may be 
+		// used to when reloading a URL is undesirable. (Do we want a user to be able to 
+		// reload a delete page?)
+		//
+		// How would redirect code be different?
+		//
+		// See, e.g., http://stackoverflow.com/questions/2047122/requestdispatcher-interface-vs-sendredirect
+
+		// pass execution on to the ReadServlet
+		String url = "/read";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

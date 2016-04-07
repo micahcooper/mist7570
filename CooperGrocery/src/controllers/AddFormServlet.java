@@ -9,27 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Product;
-import persist.PersistenceModule;
-import persist.PersistenceModuleFactory;
-import persist.PersistenceModule;
-
 /**
- * Servlet implementation class ReadServlet
+ * Servlet implementation class AddFormServlet
  */
-@WebServlet(
-		description = "Controller for reading the books table", 
-		urlPatterns = { 
-				"/ReadServlet", 
-				"/read"
-		})
-public class ReadServlet extends HttpServlet {
+@WebServlet(description = "Controller to generate the add a book form", urlPatterns = { "/add" })
+public class AddFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReadServlet() {
+    public AddFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,30 +35,10 @@ public class ReadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Create a ReadQuery helper object
-		//ReadQuery rq = new ReadQuery("grocery", "root", "");
-		PersistenceModule persist;
-		
-		try {
-			persist = PersistenceModuleFactory.createPersistenceModule();
-
-			// Get the html table from the REadQuery object
-			
-			String table = persist.getHTMLTable( persist.doReadAll() );
-			
-			// pass execution control to read.jsp along with the table
-			request.setAttribute("table", table);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String url = "/read.jsp";
+		String url = "/addForm.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
 	}
 
 }

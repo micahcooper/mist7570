@@ -3,9 +3,6 @@
  */
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  * @author micah cooper
  *
@@ -17,6 +14,10 @@ public class Product {
 	private double cost;
 	private double price;
 	private int quantity;
+	
+	public Product(){
+		super();
+	}
 	
 	/**
 	 * 
@@ -43,9 +44,6 @@ public class Product {
 	 */
 	public String getHTMLRow(){
 		String row ="";
-
-		// Consider: Could this table row code be refactored to be part of Product?
-		// Would that be a good idea or not?
 
 		row +="<tr>";
 		row +="\t<td>"+this.getSku()+"</td>";
