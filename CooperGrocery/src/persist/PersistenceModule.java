@@ -60,16 +60,18 @@ public class PersistenceModule {
 		}
 
 		public void doUpdate(Product product){
-			String query = "UPDATE products SET `Product Type`=?, Flavor=?, Price=?, Cost=?, Quatity=? WHERE sku=?";
+			String query = "UPDATE products SET SKU=?, `Product Type`=?, Flavor=?, Cost=?, Price=?, Quantity=? WHERE SKU=?";
 
 			try {
 				PreparedStatement ps = connection.prepareStatement(query);
 
-				ps.setString(1, product.getProductType());
-				ps.setString(2, product.getFlavor());
-				ps.setDouble(3, product.getCost());
-				ps.setDouble(4, product.getPrice());
-				ps.setInt(5, product.getQuantity());
+				ps.setString(1, product.getSku());
+                ps.setString(2, product.getProductType());
+                ps.setString(3, product.getFlavor());
+                ps.setDouble(4, product.getCost());
+                ps.setDouble(5, product.getPrice());
+                ps.setInt(6, product.getQuantity());
+                ps.setString(7, product.getSku());
 
 				ps.executeUpdate();
 
@@ -120,15 +122,15 @@ public class PersistenceModule {
 		 * @param int
 		 * @return Product
 		 **/
-		public Product doReadOne(int productId) {
-			String query = "SELECT * FROM products WHERE productID = ?";
+		public Product doReadOne(String sku) {
+			String query = "SELECT * FROM products WHERE SKU = ?";
 
 			Product product = null;
 
 			try {
 				PreparedStatement ps = connection.prepareStatement(query);
 
-				ps.setInt(1, productId);
+				ps.setString(1, sku);
 				ResultSet results = ps.executeQuery();
 
 				results.next();

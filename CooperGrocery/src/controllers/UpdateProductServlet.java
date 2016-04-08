@@ -13,7 +13,6 @@ import model.Product;
 import persist.PersistenceModule;
 import persist.PersistenceModuleFactory;
 
-
 /**
  * Servlet implementation class UpdateBookServlet
  */
@@ -42,35 +41,35 @@ public class UpdateProductServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// get the form data and set up a Book object
-		// TODO: Add error checking!
-	    String sku = request.getParameter("sku");
-	    String productType = request.getParameter("productType");
-	    String flavor = request.getParameter("flavor");
-	    double cost = Double.parseDouble( request.getParameter("cost") );
-	    double price = Double.parseDouble( request.getParameter("price") );
-	    int quantity = Integer.parseInt( request.getParameter("quantity") );
-	
-		// set up a product object
-	    Product product = new Product();
-	    product.setSku(sku);
-	    product.setProductType(productType);
-	    product.setFlavor(flavor);
-	    product.setCost(cost);
-	    product.setPrice(price);
-	    product.setQuantity(quantity);
-
-	 // set up an dbHelper object
-	    PersistenceModule persist;
-		try {
-			persist = PersistenceModuleFactory.createPersistenceModule();
+		// get the data
+				// TODO: Add error checking!
+			    String sku = request.getParameter("sku");
+			    String productType = request.getParameter("productType");
+			    String flavor = request.getParameter("flavor");
+			    double cost = Double.parseDouble( request.getParameter("cost") );
+			    double price = Double.parseDouble( request.getParameter("price") );
+			    int quantity = Integer.parseInt( request.getParameter("quantity") );
 			
-			// pass the book to addQuery to add to the database
-		    persist.doUpdate(product);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				// set up a product object
+			    Product product = new Product();
+			    product.setSku(sku);
+			    product.setProductType(productType);
+			    product.setFlavor(flavor);
+			    product.setCost(cost);
+			    product.setPrice(price);
+			    product.setQuantity(quantity);
+			    
+				// set up an dbHelper object
+			    PersistenceModule persist;
+				try {
+					persist = PersistenceModuleFactory.createPersistenceModule();
+					
+					// pass the book to addQuery to add to the database
+				    persist.doUpdate(product);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 		// pass control on to the ReadServlet
 		String url = "/read";

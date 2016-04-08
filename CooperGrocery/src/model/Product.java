@@ -23,7 +23,6 @@ public class Product {
 	 * 
 	 */
 	public Product(String sku, String productType, String flavor, double cost, double price, int quantity) {
-		// TODO Auto-generated constructor stub
 		this.sku = sku;
 		this.productType = productType;
 		this.flavor = flavor;
@@ -58,9 +57,9 @@ public class Product {
 		// We made changes to the Delete servlet, so that it can't be accessed via 'GET'
 		// Thus, this HTML needs to change as well. 
 		// We'll create a small form that POSTs instead.
-		row += "<a href=update?productID=" + this.getCost() + " >update</a><br>";
+		row += "<a href=update?sku=" + this.getSku() + " >update</a><br>";
 		row += "<form action=\"delete\" method=\"post\">";
-		row += "<input type=\"hidden\" name=\"productID\" value=\"" + this.getCost() + "\">";
+		row += "<input type=\"hidden\" name=\"sku\" value=\"" + this.getSku() + "\">";
 		row += "<input type=\"submit\" value=\"Delete\"></form>";
 		
 		// Consider adding behavior that might make this more user friendly:
