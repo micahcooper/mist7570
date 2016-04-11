@@ -4,14 +4,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Grocery Database</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<title>Cooper Grocery</title>
 </head>
 <body>
-<h1>Grocery Database</h1>
-
-<p>
-  <a href="read">Read the database</a>
-</p>
+<div id=wrapper>
+	<h1><a href="index.jsp">Cooper Grocery</a></h1>
+	
+	<div id=menu>
+		<p>
+		  <a class=button href="read">Products Database</a>
+		  <a class=button href="add">Add a Product</a>
+		  <a class=button href="search">Search Products</a>
+		  <a class=button href="read">Stub Button</a>
+		</p>
+	</div>
+	
+	<div id=content>
+	
+	</div>
+	
+	<div id=footer>
+		<p>This is the footer.</p>
+	</div>
+</div>
 
 </body>
 </html>

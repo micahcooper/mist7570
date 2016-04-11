@@ -92,7 +92,7 @@ public class PersistenceModule {
 		 * @return ResultSet
 		 */
 		public ResultSet doReadAll(){
-			String query = "SELECT SKU,'Product Type',Flavor,Cost,Price,Quantity FROM products"; // <-- Better
+			String query = "SELECT SKU,`Product Type`,Flavor,Cost,Price,Quantity FROM products"; // <-- Better
 
 			ResultSet results = null;
 			try {
@@ -156,6 +156,28 @@ public class PersistenceModule {
 		}
 		
 		/**
+		 * doSearch
+		 * 
+		 * @param int
+		 * @return Product
+		 **/
+		public ResultSet doSearch(String sku) {
+			String query = "SELECT SKU,`Product Type`,Flavor,Cost,Price,Quantity FROM products where SKU like ?"; // <-- Better
+
+			ResultSet results = null;
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setString(1, "%"+sku+"%");
+				results = ps.executeQuery();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block; add real error handling!
+				e.printStackTrace();
+			}
+
+			return results;
+		}
+		
+		/**
 		 * This version was refactored to accept a result set, rather than rely
 		 * on a result set existing as a field of the instance.
 		 * 
@@ -167,8 +189,8 @@ public class PersistenceModule {
 		 */
 		public String getHTMLTable(ResultSet results){
 			String table ="";
-			table += "<table border=1>\n";
-			table += "<tr><th>SKU</th><th>Product Type</th><th>Flavor</th><th>Cost</th><th>Price</th><th>Quantity</th><th>Actions</th></tr>";
+			table += "<table>\n";
+			table += "<tr><th>SKU</th><th>Product Type</th><th>Flavor</th><th>Cost</th><th>Price</th><th>Quantity</th><th></th><th></th></tr>";
 			try {
 				while(results.next()) {
 

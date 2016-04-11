@@ -1,0 +1,1 @@
+*I moved the HTMLGetRow to the Product model, it seemed like a good idea and makes for easier to read code.

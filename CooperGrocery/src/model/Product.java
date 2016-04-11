@@ -25,6 +25,7 @@ public class Product {
 	public Product(String sku, String productType, String flavor, double cost, double price, int quantity) {
 		this.sku = sku;
 		this.productType = productType;
+		System.out.println("Product type: "+productType);
 		this.flavor = flavor;
 		this.cost = cost;
 		this.price = price;
@@ -53,11 +54,14 @@ public class Product {
 		row +="<td>"+this.getQuantity()+"</td>";
 		
 		row +="\n\t<td>";
+		row += "<a class=button href=update?sku=" + this.getSku() + " >update</a>";
+		row +="</td>\n";
+		row +="\n\t<td>";
 		
 		// We made changes to the Delete servlet, so that it can't be accessed via 'GET'
 		// Thus, this HTML needs to change as well. 
 		// We'll create a small form that POSTs instead.
-		row += "<a href=update?sku=" + this.getSku() + " >update</a><br>";
+		
 		row += "<form action=\"delete\" method=\"post\">";
 		row += "<input type=\"hidden\" name=\"sku\" value=\"" + this.getSku() + "\">";
 		row += "<input type=\"submit\" value=\"Delete\"></form>";

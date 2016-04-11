@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Product;
 import persist.PersistenceModule;
 import persist.PersistenceModuleFactory;
-import persist.PersistenceModule;
 
 /**
  * Servlet implementation class ReadServlet
@@ -45,8 +43,7 @@ public class ReadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Create a ReadQuery helper object
-		//ReadQuery rq = new ReadQuery("grocery", "root", "");
+		// Create a ReadQuery helper objects
 		PersistenceModule persist;
 		
 		try {

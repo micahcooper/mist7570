@@ -9,23 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Product;
 import persist.PersistenceModule;
 import persist.PersistenceModuleFactory;
 
 /**
  * Servlet implementation class UpdateFormServlet
  */
-@WebServlet(description = "This will get a product and use the data to fill in a table for updating the record", urlPatterns = { "/update" })
-public class UpdateFormServlet extends HttpServlet {
+@WebServlet(description = "This will get a product and use the data to fill in a table for updating the record", urlPatterns = { "/search" })
+public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateFormServlet() {
+    public SearchServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,28 +37,30 @@ public class UpdateFormServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// get the sku
-		String sku = request.getParameter("sku");
-		Product product = new Product();
-		// set up an persistence object
-	    PersistenceModule persist;
-		try {
-			persist = PersistenceModuleFactory.createPersistenceModule();
-			
-			// pass the book to addQuery to add to the database
-		    product = persist.doReadOne(sku);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
-		// pass product and control to the updateForm.jsp
-		request.setAttribute("product", product);
-		
-		String url = "/updateForm.jsp";
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		// Create a ReadQuery helper objects
+				PersistenceModule persist;
+				String sku = request.getParameter("sku");
+				
+				try {
+					persist = PersistenceModuleFactory.createPersistenceModule();
+
+					// Get the html table from the REadQuery object
+					
+					String table = persist.getHTMLTable( persist.doSearch(sku) );
+					
+					// pass execution control to read.jsp along with the table
+					request.setAttribute("table", table);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				String url = "/search.jsp";
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+				dispatcher.forward(request, response);
+
 	}
 
 }
